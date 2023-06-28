@@ -1,6 +1,9 @@
 import { Navbar, Link, Text, Avatar, Dropdown } from "@nextui-org/react";
 import { AcmeLogo } from "./AcmeLogo.js";
 import { useAuth } from "@/context/auth-context.js";
+import { useRouter } from "next/router.js";
+import { useTheme as useNextTheme } from "next-themes";
+import { Switch, useTheme } from "@nextui-org/react";
 
 function MainNavbar() {
   const collapseItems = [
@@ -16,6 +19,8 @@ function MainNavbar() {
     "Log Out",
   ];
 
+  const router = useRouter();
+
   const { user, logOut } = useAuth();
 
   const handleLogout = async () => {
@@ -26,6 +31,9 @@ function MainNavbar() {
       console.log(error.message);
     }
   };
+
+  const { setTheme } = useNextTheme();
+  const { isDark, type } = useTheme();
 
   return (
     <Navbar isBordered variant="sticky">
@@ -45,16 +53,18 @@ function MainNavbar() {
       <Navbar.Content
         enableCursorHighlight
         activeColor="secondary"
-        hideIn="xs"
         variant="highlight-rounded"
       >
         <Navbar.Link href="#">Features</Navbar.Link>
         <Navbar.Link isActive href="#">
           Customers
         </Navbar.Link>
-        <Navbar.Link href="#">Pricing</Navbar.Link>
-        <Navbar.Link href="#">Company</Navbar.Link>
+        <Switch
+          checked={isDark}
+          onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
+        />
       </Navbar.Content>
+      <div></div>
       <Navbar.Content
         css={{
           "@xs": {
@@ -78,15 +88,29 @@ function MainNavbar() {
           <Dropdown.Menu
             aria-label="User menu actions"
             color="secondary"
-            onAction={(actionKey) => console.log({ actionKey })}
+            onAction={(actionKey) => {
+              console.log({ actionKey });
+              if (actionKey === "logout") {
+                handleLogout();
+              }
+              if (actionKey === "login") {
+                router.push("/login");
+              }
+              if (actionKey === "teams") {
+                router.push("/teams");
+              }
+              if (actionKey === "rules") {
+                router.push("/rules");
+              }
+            }}
           >
             {!user.uid ? (
               <Dropdown.Item
-                key="profile"
+                key="login"
                 css={{ height: "$18" }}
                 aria-label="string"
               >
-                <Link href="/login">
+                <Link>
                   <Text b color="inherit" css={{ d: "flex" }}>
                     Login
                   </Text>
@@ -117,18 +141,22 @@ function MainNavbar() {
               Analytics
             </Dropdown.Item>
             <Dropdown.Item key="system">System</Dropdown.Item>
+            {user.uid ? <Dropdown.Item key="teams">Teams</Dropdown.Item> : null}
+            {user.uid ? <Dropdown.Item key="rules">Rules</Dropdown.Item> : null}
             <Dropdown.Item key="configurations">Configurations</Dropdown.Item>
             <Dropdown.Item key="help_and_feedback" withDivider>
               Help & Feedback
             </Dropdown.Item>
-            <Dropdown.Item
-              key="logout"
-              withDivider
-              color="error"
-              aria-label="string"
-            >
-              <a onClick={handleLogout}>Logout</a>
-            </Dropdown.Item>
+            {user.uid ? (
+              <Dropdown.Item
+                key="logout"
+                withDivider
+                color="error"
+                aria-label="string"
+              >
+                <a>Logout</a>
+              </Dropdown.Item>
+            ) : null}
           </Dropdown.Menu>
         </Dropdown>
       </Navbar.Content>

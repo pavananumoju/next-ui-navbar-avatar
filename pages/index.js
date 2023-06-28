@@ -1,5 +1,7 @@
 export default function App() {
   return (
-    <h1>Hello</h1>
+    <div className="text-center text-blue-900 mt-10 text-xl">
+      Welcome to Cricbudz
+    </div>
   );
 }

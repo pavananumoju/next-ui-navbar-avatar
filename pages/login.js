@@ -1,14 +1,14 @@
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
+import Link from "next/link";
 
 function Login() {
   const methods = useForm();
-  const {user, logIn } = useAuth();
+  const { user, logIn } = useAuth();
   const router = useRouter();
 
-
-  if(user.uid){
+  if (user.uid) {
     router.push("/dashboard");
   }
 
@@ -29,7 +29,7 @@ function Login() {
   };
 
   return (
-    <div className="sign-up-form container mx-auto w-96 mt-12 border-2 border-gray-400">
+    <div className="sign-up-form container mx-auto w-96 mt-12">
       <h2 className="px-12 mt-8 text-center text-2xl font-semibold text-blue-900">
         Log In
       </h2>
@@ -79,7 +79,15 @@ function Login() {
             >
               <p className="capitalize text-white font-normal">submit</p>
             </button>
+            
           </div>
+          <div className="flex justify-center pt-8">
+            <Link href="/signup">
+            <button className="bg-blue-300 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded">
+                Signup
+              </button>
+            </Link>
+            </div>
         </form>
       </FormProvider>
     </div>
