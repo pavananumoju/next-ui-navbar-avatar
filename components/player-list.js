@@ -2,7 +2,7 @@ import { Table, Row, Col, Tooltip, User, Text } from "@nextui-org/react";
 
 function PlayerList(props) {
   const squad = props.squad;
-  console.log(squad);
+  // console.log(squad);
   const columns = [
     { name: "NAME", uid: "name" },
     { name: "BATTING STYLE", uid: "battingStyle" },
@@ -54,7 +54,7 @@ function PlayerList(props) {
   };
 
   return (
-    <div className="container">
+    <div className="justify-center items-center m-5">
       <Table
         aria-label="Example table with custom cells"
         css={{
