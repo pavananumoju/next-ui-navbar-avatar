@@ -77,15 +77,13 @@ function PlayerList(props) {
         <Table.Body items={squad}>
           {squad.map((player) =>
             player.isHeader ? (
-              <Table.Row key={player.name} css={{ background: "gray" }}>
-                <Table.Cell></Table.Cell>
-                <Table.Cell>
-                  <h1>{player.name}</h1>
-                </Table.Cell>
-                <Table.Cell></Table.Cell>
+              <Table.Row key={player.id} css={{background: 'gray'}}>
+                <Table.Cell key={player.id}></Table.Cell>
+                <Table.Cell key={player.id}><h1>{player.name}</h1></Table.Cell>
+                <Table.Cell key={player.id}></Table.Cell>
               </Table.Row>
             ) : (
-              <Table.Row key={player.name}>
+              <Table.Row key={player.id}>
                 {(columnKey) => (
                   <Table.Cell key={columnKey}>
                     {renderCell(player, columnKey)}
