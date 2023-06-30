@@ -1,5 +1,12 @@
-import { Navbar, Link, Text, Avatar, Dropdown, Spacer } from "@nextui-org/react";
-import { AcmeLogo } from "./AcmeLogo.js";
+import {
+  Navbar,
+  Link,
+  Text,
+  Avatar,
+  Dropdown,
+  Spacer,
+} from "@nextui-org/react";
+// import { AcmeLogo } from "./AcmeLogo.js";
 import { useAuth } from "@/context/auth-context.js";
 import { useRouter } from "next/router.js";
 import { useTheme as useNextTheme } from "next-themes";
@@ -7,16 +14,11 @@ import { Switch, useTheme } from "@nextui-org/react";
 
 function MainNavbar() {
   const collapseItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
+    { key: "0", label: "coming soon", route: "/profile" },
+    { key: "1", label: "Profile", route: "/profile" },
+    { key: "2", label: "Teams", route: "/teams" },
+    { key: "3", label: "Log Out", route: "/logout" },
+    { key: "4", label: "Help & Feedback", route: "/fb" },
   ];
 
   const router = useRouter();
@@ -45,9 +47,13 @@ function MainNavbar() {
           },
         }}
       >
-        <AcmeLogo />
+        <Avatar
+          // squared
+          size="md"
+          src="/icons/CB.png"
+        />
         <Text b color="inherit" hideIn="xs">
-          ACME
+          CRICBUDZ
         </Text>
       </Navbar.Brand>
       <Navbar.Content
@@ -56,18 +62,18 @@ function MainNavbar() {
         variant="highlight-rounded"
       >
         <Navbar.Link href="#">Features</Navbar.Link>
-        <Navbar.Link isActive href="#">
+        {/* <Navbar.Link isActive href="#">
           Customers
-        </Navbar.Link>
-        <Spacer x={0.5}/>
+        </Navbar.Link> */}
+        <Spacer x={0.5} />
         <Switch
-        shadow
+          shadow
           checked={isDark}
           onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
         />
-        <Spacer x={0.5}/>
+        <Spacer x={0.5} />
       </Navbar.Content>
-      <div></div>
+      {/* <div>test</div> */}
       <Navbar.Content
         css={{
           "@xs": {
@@ -76,97 +82,96 @@ function MainNavbar() {
           },
         }}
       >
-        <Dropdown placement="bottom-right">
-          <Navbar.Item>
-            <Dropdown.Trigger>
-              <Avatar
-                bordered
-                as="button"
-                color="secondary"
-                size="md"
-                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-              />
-            </Dropdown.Trigger>
-          </Navbar.Item>
-          <Dropdown.Menu
-            aria-label="User menu actions"
-            color="secondary"
-            onAction={(actionKey) => {
-              console.log({ actionKey });
-              if (actionKey === "logout") {
-                handleLogout();
-              }
-              if (actionKey === "login") {
-                router.push("/login");
-              }
-              if (actionKey === "teams") {
-                router.push("/teams");
-              }
-              if (actionKey === "rules") {
-                router.push("/rules");
-              }
-            }}
-          >
-            {!user.uid ? (
-              <Dropdown.Item
-                key="login"
-                css={{ height: "$18" }}
-                aria-label="string"
-              >
-                <Link>
+        {user.uid ? (
+          <Dropdown placement="bottom-right">
+            <Navbar.Item>
+              <Dropdown.Trigger>
+                <Avatar
+                  bordered
+                  as="button"
+                  color="secondary"
+                  size="md"
+                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                />
+              </Dropdown.Trigger>
+            </Navbar.Item>
+            <Dropdown.Menu
+              aria-label="User menu actions"
+              color="secondary"
+              onAction={(actionKey) => {
+                console.log({ actionKey });
+                if (actionKey === "logout") {
+                  handleLogout();
+                }
+                if (actionKey === "login") {
+                  router.push("/login");
+                }
+                if (actionKey === "teams") {
+                  router.push("/teams");
+                }
+                if (actionKey === "rules") {
+                  router.push("/rules");
+                }
+              }}
+            >
+              {!user.uid ? (
+                <Dropdown.Item
+                  key="login"
+                  css={{ height: "$18" }}
+                  aria-label="string"
+                >
+                  <Link>
+                    <Text b color="inherit" css={{ d: "flex" }}>
+                      Login
+                    </Text>
+                  </Link>
+                </Dropdown.Item>
+              ) : (
+                <Dropdown.Item
+                  key="profile"
+                  css={{
+                    height: "$18",
+                    "pointer-events": "none",
+                    cursor: "default",
+                    "text-decoration": "none",
+                  }}
+                  aria-label="string"
+                >
                   <Text b color="inherit" css={{ d: "flex" }}>
-                    Login
+                    {user.email}
                   </Text>
-                </Link>
-              </Dropdown.Item>
-            ) : (
-              <Dropdown.Item
-                key="profile"
-                css={{
-                  height: "$18",
-                  "pointer-events": "none",
-                  cursor: "default",
-                  "text-decoration": "none",
-                }}
-                aria-label="string"
-              >
-                <Text b color="inherit" css={{ d: "flex" }}>
-                  {user.email}
-                </Text>
-              </Dropdown.Item>
-            )}
+                </Dropdown.Item>
+              )}
 
-            <Dropdown.Item key="settings" withDivider>
-              My Settings
-            </Dropdown.Item>
-            <Dropdown.Item key="team_settings">Team Settings</Dropdown.Item>
-            <Dropdown.Item key="analytics" withDivider>
-              Analytics
-            </Dropdown.Item>
-            <Dropdown.Item key="system">System</Dropdown.Item>
-            {user.uid ? <Dropdown.Item key="teams">Teams</Dropdown.Item> : null}
-            {user.uid ? <Dropdown.Item key="rules">Rules</Dropdown.Item> : null}
-            <Dropdown.Item key="configurations">Configurations</Dropdown.Item>
-            <Dropdown.Item key="help_and_feedback" withDivider>
-              Help & Feedback
-            </Dropdown.Item>
-            {user.uid ? (
-              <Dropdown.Item
-                key="logout"
-                withDivider
-                color="error"
-                aria-label="string"
-              >
-                <a>Logout</a>
+              {user.uid ? (
+                <Dropdown.Item key="teams" withDivider>
+                  Teams
+                </Dropdown.Item>
+              ) : null}
+              {user.uid ? (
+                <Dropdown.Item key="rules">Rules</Dropdown.Item>
+              ) : null}
+              <Dropdown.Item key="help_and_feedback" withDivider>
+                Help & Feedback
               </Dropdown.Item>
-            ) : null}
-          </Dropdown.Menu>
-        </Dropdown>
+              {user.uid ? (
+                <Dropdown.Item
+                  key="logout"
+                  withDivider
+                  color="error"
+                  aria-label="string"
+                >
+                  <a>Logout</a>
+                </Dropdown.Item>
+              ) : null}
+            </Dropdown.Menu>
+          </Dropdown>
+        ) : null}
       </Navbar.Content>
       <Navbar.Collapse>
         {collapseItems.map((item, index) => (
           <Navbar.CollapseItem
-            key={item}
+            key={item.key}
             activeColor="secondary"
             css={{
               color: index === collapseItems.length - 1 ? "$error" : "",
@@ -179,8 +184,10 @@ function MainNavbar() {
                 minWidth: "100%",
               }}
               href="#"
+              // href={item.route}
+              // onPress={()=>{router.push(`/${item.route}`)}}
             >
-              {item}
+              {item.label}
             </Link>
           </Navbar.CollapseItem>
         ))}
