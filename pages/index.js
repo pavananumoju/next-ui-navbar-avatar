@@ -1,7 +1,26 @@
+import { Container, Spacer, Text, Button } from "@nextui-org/react";
+import { useRouter } from "next/router";
+
 export default function App() {
+  const router = useRouter();
   return (
-    <div className="text-center text-blue-900 mt-10 text-xl">
-      Welcome to Cricbudz
-    </div>
+    <Container justify="center" align="center">
+      <Spacer y={1} />
+      <Text>WELCOME TO CRICBUDZ</Text>
+      <Spacer y={1} />
+      <Text>Click below to login</Text>
+      <Spacer y={1} />
+      <Button
+        ghost
+        size="sm"
+        auto
+        // color={"primary"}
+        onPress={() => {
+          router.push("/login");
+        }}
+      >
+        Login
+      </Button>
+    </Container>
   );
 }
