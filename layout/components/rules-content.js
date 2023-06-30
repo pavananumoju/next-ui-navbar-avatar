@@ -1,159 +1,113 @@
-function RulesContent () {
-    return (<div className="ml-10 mr-10 mt-10">
+import { Container, Table } from "@nextui-org/react";
 
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-600 uppercase bg-gray-50 dark:bg-gray-600 dark:text-gray-200">
-                <tr>
-                    <th scope="col" className="px-6 py-3">
-                        SNO
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Rule
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Points
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-            <tr className="border-b bg-gray-100 dark:text-black dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
-                        1
-                    </th>
-                    <td className="px-6 py-4">
-                    1 Run
-                    </td>
-                    <td className="px-6 py-4">
-                        1
-                    </td>
-                </tr>
-                <tr className="border-b bg-gray-300 dark:text-black dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
-                        2
-                    </th>
-                    <td className="px-6 py-4">
-                    1 Wicket
-                    </td>
-                    <td className="px-6 py-4">
-                        10
-                    </td>
-                </tr>
-                <tr className="border-b bg-gray-100 dark:text-black dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
-                        3
-                    </th>
-                    <td className="px-6 py-4">
-                    1 Runout
-                    </td>
-                    <td className="px-6 py-4">
-                        5
-                    </td>
-                </tr>
-                <tr className="border-b bg-gray-300 dark:text-black dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
-                        4
-                    </th>
-                    <td className="px-6 py-4">
-                    Direct Hit
-                    </td>
-                    <td className="px-6 py-4">
-                        10
-                    </td>
-                </tr>
-                <tr className="border-b bg-gray-100 dark:text-black dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
-                        5
-                    </th>
-                    <td className="px-6 py-4">
-                    1 Catch
-                    </td>
-                    <td className="px-6 py-4">
-                        5
-                    </td>
-                </tr>
-                <tr className="border-b bg-gray-300 dark:text-black dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
-                        6
-                    </th>
-                    <td className="px-6 py-4">
-                    1 Stumping
-                    </td>
-                    <td className="px-6 py-4">
-                        5
-                    </td>
-                </tr>
-                <tr className="border-b bg-gray-100 dark:text-black dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
-                        7
-                    </th>
-                    <td className="px-6 py-4">
-                    1 Dot Bal
-                    </td>
-                    <td className="px-6 py-4">
-                        1
-                    </td>
-                </tr>
-                <tr className="border-b bg-gray-300 dark:text-black dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
-                        8
-                    </th>
-                    <td className="px-6 py-4">
-                    Half Century
-                    </td>
-                    <td className="px-6 py-4">
-                        5
-                    </td>
-                </tr>
-                <tr className="border-b bg-gray-100 dark:text-black dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
-                        9
-                    </th>
-                    <td className="px-6 py-4">
-                    Century
-                    </td>
-                    <td className="px-6 py-4">
-                        10
-                    </td>
-                </tr>
-                <tr className="border-b bg-gray-300 dark:text-black dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
-                        10
-                    </th>
-                    <td className="px-6 py-4">
-                    5 Wicket Haul
-                    </td>
-                    <td className="px-6 py-4">
-                        20
-                    </td>
-                </tr>
-                <tr className="border-b bg-gray-100 dark:text-black dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
-                        11
-                    </th>
-                    <td className="px-6 py-4">
-                    3 Wicket Haul
-                    </td>
-                    <td className="px-6 py-4">
-                        10
-                    </td>
-                </tr>
-                <tr className="border-b bg-gray-300 dark:text-black dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
-                        12
-                    </th>
-                    <td className="px-6 py-4">
-                    Man of the Match
-                    </td>
-                    <td className="px-6 py-4">
-                        10
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
-        </div>);
+function RulesContent() {
+  const columns = [
+    {
+      key: "sno",
+      label: "SNO",
+    },
+    {
+      key: "subject",
+      label: "SUBJECT",
+    },
+    {
+      key: "points",
+      label: "POINTS",
+    },
+  ];
+
+  const rows = [
+    {
+      sno: "1",
+      subject: "1 Run",
+      points: "1",
+    },
+    {
+      sno: "2",
+      subject: "1 Wicket",
+      points: "10",
+    },
+    {
+      sno: "3",
+      subject: "1 Runout",
+      points: "5",
+    },
+    {
+      sno: "4",
+      subject: "Direct Hit",
+      points: "10",
+    },
+    {
+      sno: "5",
+      subject: "1 Catch",
+      points: "5",
+    },
+    {
+      sno: "6",
+      subject: "1 Stumping",
+      points: "5",
+    },
+    {
+      sno: "7",
+      subject: "1 Dot Bal",
+      points: "1",
+    },
+    {
+      sno: "8",
+      subject: "Half Century",
+      points: "5",
+    },
+    {
+      sno: "9",
+      subject: "Century",
+      points: "10",
+    },
+    {
+      sno: "10",
+      subject: "5 Wicket Haul",
+      points: "20",
+    },
+    {
+      sno: "11",
+      subject: "3 Wicket Haul",
+      points: "10",
+    },
+    {
+      sno: "12",
+      subject: "Man of the Match",
+      points: "10",
+    },
+  ];
+  return (
+    <Container justify="center" align="center">
+      <Table
+        lined
+        striped
+        hoverable
+        //   selectionMode="multiple"
+        //   headerLined
+        //   shadow={false}
+        aria-label="Example table with dynamic content"
+        css={{
+          height: "auto",
+          minWidth: "100%",
+        }}
+      >
+        <Table.Header columns={columns}>
+          {(column) => (
+            <Table.Column key={column.key}>{column.label}</Table.Column>
+          )}
+        </Table.Header>
+        <Table.Body items={rows}>
+          {(item) => (
+            <Table.Row key={item.sno}>
+              {(columnKey) => <Table.Cell>{item[columnKey]}</Table.Cell>}
+            </Table.Row>
+          )}
+        </Table.Body>
+      </Table>
+    </Container>
+  );
 }
 
 export default RulesContent;

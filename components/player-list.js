@@ -46,7 +46,7 @@ function PlayerList(props) {
   return (
     <div>
       <Table
-      striped
+        // striped
         aria-label="Example table with custom cells"
         css={{
           height: "auto",
@@ -68,7 +68,7 @@ function PlayerList(props) {
         <Table.Body items={squad}>
           {squad.map((player) =>
             player.isHeader ? (
-              <Table.Row key={player.name} css={{ background: "gray" }}>
+              <Table.Row key={player.name} css={{ background: "#8A8A8A" }}>
                 <Table.Cell>{player.name}</Table.Cell>
                 <Table.Cell></Table.Cell>
               </Table.Row>

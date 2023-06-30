@@ -65,6 +65,7 @@ function MainNavbar() {
           checked={isDark}
           onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
         />
+        <Spacer x={0.5}/>
       </Navbar.Content>
       <div></div>
       <Navbar.Content
