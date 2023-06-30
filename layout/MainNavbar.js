@@ -1,4 +1,4 @@
-import { Navbar, Link, Text, Avatar, Dropdown } from "@nextui-org/react";
+import { Navbar, Link, Text, Avatar, Dropdown, Spacer } from "@nextui-org/react";
 import { AcmeLogo } from "./AcmeLogo.js";
 import { useAuth } from "@/context/auth-context.js";
 import { useRouter } from "next/router.js";
@@ -36,7 +36,7 @@ function MainNavbar() {
   const { isDark, type } = useTheme();
 
   return (
-    <Navbar isBordered variant="sticky">
+    <Navbar isBordered variant="floating" css={{ zIndex: 1000 }}>
       <Navbar.Toggle showIn="xs" />
       <Navbar.Brand
         css={{
@@ -59,7 +59,9 @@ function MainNavbar() {
         <Navbar.Link isActive href="#">
           Customers
         </Navbar.Link>
+        <Spacer x={0.5}/>
         <Switch
+        shadow
           checked={isDark}
           onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
         />

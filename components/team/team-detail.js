@@ -1,4 +1,4 @@
-import { Card } from "@nextui-org/react";
+import { Card, User, Grid, Spacer, Image } from "@nextui-org/react";
 import { useRouter } from "next/router";
 
 function TeamDetails(props) {
@@ -17,7 +17,14 @@ function TeamDetails(props) {
         }}
       >
         <Card.Body>
-          {teamData.squadId} - {teamData.squadType} - {teamData.teamId}
+          <User
+            squared
+            src={`/images/teams/${teamData.squadId}.jpg`}
+            name={teamData.squadType}
+            css={{ p: 0 }}
+          >
+            {teamData.squadId}
+          </User>
         </Card.Body>
       </Card>
     </li>

@@ -1,17 +1,19 @@
 import TeamDetails from "./team-detail";
+import { Container, Spacer, Text } from "@nextui-org/react";
 
 function TeamList(props) {
   return (
-    <div className="flex justify-center ">
+    <Container justify="center" align="center">
       <div>
-        <div className="flex justify-center items-center m-6">Teams 2023</div>
+        <Spacer y={1}/>
+        <Text size="$xl">All Teams</Text>
         <ul>
           {props.teams.map((team) => (
             <TeamDetails key={team.squadId} team={team} />
           ))}
         </ul>
       </div>
-    </div>
+    </Container>
   );
 }
 

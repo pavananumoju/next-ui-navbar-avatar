@@ -1,13 +1,12 @@
-import { Table, Row, Col, Tooltip, User, Text } from "@nextui-org/react";
+import { Table, Row, Col, User, Text } from "@nextui-org/react";
 
 function PlayerList(props) {
   const squad = props.squad;
   // console.log(squad);
   const columns = [
     { name: "NAME", uid: "name" },
-    { name: "BATTING STYLE", uid: "battingStyle" },
-    { name: "BOWLING STYLE", uid: "bowlingStyle" },
-    // {name: "HEADER", uid: "isHeader"}
+    { name: "STYLE", uid: "style" },
+    // { name: "BOWLING STYLE", uid: "bowlingStyle" },
   ];
 
   const renderCell = (user, columnKey) => {
@@ -26,7 +25,7 @@ function PlayerList(props) {
           </User>
         );
 
-      case "battingStyle":
+      default:
         return (
           <Col>
             <Row>
@@ -34,12 +33,6 @@ function PlayerList(props) {
                 {user.battingStyle}
               </Text>
             </Row>
-          </Col>
-        );
-
-      case "bowlingStyle":
-        return (
-          <Col>
             <Row>
               <Text b size={13} css={{ tt: "capitalize", color: "$accents7" }}>
                 {user.bowlingStyle}
@@ -47,21 +40,19 @@ function PlayerList(props) {
             </Row>
           </Col>
         );
-
-      default:
-        return cellValue;
     }
   };
 
   return (
-    <div className="justify-center items-center m-5">
+    <div>
       <Table
+      striped
         aria-label="Example table with custom cells"
         css={{
           height: "auto",
           minWidth: "100%",
         }}
-        selectionMode="none"
+        selectionMode="multiple"
       >
         <Table.Header columns={columns}>
           {(column) => (
@@ -78,10 +69,7 @@ function PlayerList(props) {
           {squad.map((player) =>
             player.isHeader ? (
               <Table.Row key={player.name} css={{ background: "gray" }}>
-                <Table.Cell></Table.Cell>
-                <Table.Cell>
-                  <h1>{player.name}</h1>
-                </Table.Cell>
+                <Table.Cell>{player.name}</Table.Cell>
                 <Table.Cell></Table.Cell>
               </Table.Row>
             ) : (

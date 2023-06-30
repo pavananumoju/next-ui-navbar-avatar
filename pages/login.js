@@ -2,6 +2,7 @@ import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 import Link from "next/link";
+import { Container, Text, Input, Button, Spacer } from "@nextui-org/react";
 
 function Login() {
   const methods = useForm();
@@ -29,68 +30,54 @@ function Login() {
   };
 
   return (
-    <div className="sign-up-form container mx-auto w-96 mt-12">
-      <h2 className="px-12 mt-8 text-center text-2xl font-semibold text-blue-900">
-        Log In
-      </h2>
+    <Container justify="center" align="center">
+      <Spacer y={1} />
+      <Text>Log In</Text>
+      <Spacer y={1} />
       <FormProvider {...methods}>
-        <form
-          action=""
-          className="w-80 mx-auto pb-12 px-4"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <div className="mt-8">
-            <div className="flex items-center justify-between">
-              <label htmlFor="" className="block mb-3 font-sans text-blue-900">
-                Email
-              </label>
-            </div>
-
-            <input
-              type="email"
-              {...register("email", { required: "Email is required" })}
-              className={`border border-solid rounded-lg ring:0 focus:ring-0 focus:outline-none border-gray-400 text-gray-500 text-normal py-3 h-12 px-6 text-lg w-full flex items-center`}
-            />
-            {errors.email && (
-              <p className="text-red-400">{errors.email.message}</p>
-            )}
-          </div>
-          <div className="mt-8">
-            <div className="flex items-center justify-between">
-              <label htmlFor="" className="block mb-3 font-sans text-blue-900">
-                Password
-              </label>
-            </div>
-
-            <input
-              type="password"
-              {...register("password", { required: "Password is required" })}
-              className={`border border-solid rounded-lg ring:0 focus:ring-0 focus:outline-none border-gray-400 text-gray-500 text-normal py-3 h-12 px-6 text-lg w-full flex items-center`}
-            />
-            {errors.password && (
-              <p className="text-red-400">{errors.password.message}</p>
-            )}
-          </div>
-
-          <div className="flex justify-center pt-8">
-            <button
-              type="submit"
-              className={`h-12 text-center w-2/3 bg-blue-900 border-2 rounded-md hover:shadow-lg hover:bg-blue-800 text-lg transition`}
-            >
-              <p className="capitalize text-white font-normal">submit</p>
-            </button>
-            
-          </div>
-          <div className="flex justify-center pt-8">
-            <Link href="/signup">
-            <button className="bg-blue-300 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded">
-                Signup
-              </button>
-            </Link>
-            </div>
+        <form action="" onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            type="email"
+            label="Email"
+            bordered
+            color="secondary"
+            labelPlaceholder="Email"
+            {...register("email", { required: "Email is required" })}
+          />
+          {errors.email && (
+            <p className="text-red-400">{errors.email.message}</p>
+          )}
+          <Spacer y={1.5} />
+          <Input.Password
+            bordered
+            color="secondary"
+            label="Password"
+            type="password"
+            {...register("password", { required: "Password is required" })}
+            labelPlaceholder="Password"
+          />
+          {errors.password && (
+            <p className="text-red-400">{errors.password.message}</p>
+          )}
+          <Spacer y={1} />
+          <Button color={"primary"} ghost type="submit">
+            Submit
+          </Button>
+          <Spacer y={4} />
+          <Button
+            ghost
+            size="sm"
+            auto
+            // color={"primary"}
+            onPress={() => {
+              router.push("/signup");
+            }}
+          >
+            Signup
+          </Button>
         </form>
       </FormProvider>
-    </div>
+    </Container>
   );
 }
 

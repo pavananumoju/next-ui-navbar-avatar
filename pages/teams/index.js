@@ -3,13 +3,6 @@ import ProtectedRoute from "@/layout/components/protected-route";
 import { db } from "@/firebase/firebase";
 import { doc, setDoc, getDocs, collection } from "firebase/firestore";
 
-const DUMMY_TEAMS = [
-  { teamId: 1, teamName: "Sunrisers Hyderabad", teamCode: "SRH" },
-  { teamId: 2, teamName: "Sunrisers Hyderabad", teamCode: "KKR" },
-  { teamId: 3, teamName: "Sunrisers Hyderabad", teamCode: "CSK" },
-  { teamId: 4, teamName: "Sunrisers Hyderabad", teamCode: "RCB" },
-];
-
 function TeamsPage(props) {
   const { teams } = props;
   return (
