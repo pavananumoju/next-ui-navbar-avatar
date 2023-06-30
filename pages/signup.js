@@ -2,9 +2,12 @@ import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 import { Text, Spacer, Input, Button, Container } from "@nextui-org/react";
+import { useState } from "react";
 
 function SignupPage() {
   const { signUp } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
   const router = useRouter();
 
   const methods = useForm();
@@ -17,11 +20,21 @@ function SignupPage() {
 
   const onSubmit = async (data) => {
     try {
+      setIsLoading(true);
       console.log(data);
-      await signUp(data.email, data.password);
-      router.push("/dashboard");
+      if (data.password_confirm != data.password) {
+        setIsLoading(false);
+        console.log("passwords dont match");
+        setMessage("passwords dont match");
+      } else {
+        await signUp(data.email, data.password);
+        router.push("/dashboard");
+        setIsLoading(false);
+      }
     } catch (error) {
+      setIsLoading(false);
       console.log(error.message);
+      setMessage(error.message);
     }
   };
 
@@ -78,8 +91,10 @@ function SignupPage() {
           <Button color={"primary"} ghost type="submit">
             Submit
           </Button>
-
-          <Spacer y={4} />
+          <Spacer y={2} />
+          {isLoading && <Text color="green">Loading</Text>}
+          {!isLoading && message && <Text color="orange">{message}</Text>}
+          <Spacer y={2} />
           <Button
             ghost
             size="sm"

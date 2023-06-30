@@ -26,7 +26,7 @@ function MainNavbar() {
   const handleLogout = async () => {
     try {
       await logOut();
-      router.push("/login");
+      // router.push("/login");
     } catch (error) {
       console.log(error.message);
     }

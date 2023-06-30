@@ -3,10 +3,13 @@ import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 import Link from "next/link";
 import { Container, Text, Input, Button, Spacer } from "@nextui-org/react";
+import { useState } from "react";
 
 function Login() {
   const methods = useForm();
   const { user, logIn } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
   const router = useRouter();
 
   if (user.uid) {
@@ -21,11 +24,15 @@ function Login() {
 
   const onSubmit = async (data) => {
     try {
+      setIsLoading(true);
       console.log(data);
       await logIn(data.email, data.password);
-      router.push("/dashboard");
+      // router.push("/dashboard");
+      setIsLoading(false);
     } catch (error) {
       console.log(error.message);
+      setIsLoading(false);
+      setMessage(error.message);
     }
   };
 
@@ -63,7 +70,10 @@ function Login() {
           <Button color={"primary"} ghost type="submit">
             Submit
           </Button>
-          <Spacer y={4} />
+          <Spacer y={2} />
+          {isLoading && <Text color="green">Loading</Text>}
+          {!isLoading && message && <Text color="orange">{message}</Text>}
+          <Spacer y={2} />
           <Button
             ghost
             size="sm"
