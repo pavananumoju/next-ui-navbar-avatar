@@ -1,6 +1,8 @@
 import { Container, Text, Spacer, Button } from "@nextui-org/react";
+import { useRouter } from "next/router";
 
 function PageNotFound() {
+  const router = useRouter();
   return (
     <Container justify="center" align="center">
       <Spacer y={6} />
