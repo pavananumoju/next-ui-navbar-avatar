@@ -23,6 +23,7 @@ export const getDataFromAPI = (squadId) => {
 };
 
 export async function getDocFromDB(path, pathSegment) {
+  // console.log('getDocFromDB:'+path, pathSegment)
   const ref = getDocRef(path, pathSegment);
   const docSnap = await getDoc(ref);
   // return docSnap.data().player;

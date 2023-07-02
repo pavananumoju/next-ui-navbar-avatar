@@ -1,13 +1,15 @@
-import { getDataFromAPI, getDocFromDB } from "@/components/utils/firebase-db-utils";
+import {
+  getDataFromAPI,
+  getDocFromDB,
+} from "@/components/utils/firebase-db-utils";
 import { Button, Grid, Spacer, Container } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 const SelectionPage = (props) => {
+  const router = useRouter();
 
-const router = useRouter();
-
-const {list1, list2} = props;
+  const { list1, list2 } = props;
 
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -41,7 +43,7 @@ const {list1, list2} = props;
   };
 
   function handleSelectedItemClick(itemId) {
-    console.log("remove :" + itemId);
+    // console.log("remove :" + itemId);
     setSelectedItems(
       selectedItems.filter((selectedItem) => selectedItem.id !== itemId)
     );
@@ -128,28 +130,38 @@ const {list1, list2} = props;
       </Grid.Container>
 
       <Spacer y={5} />
-          <Button
-            ghost
-            size="sm"
-            auto
-            // color={"primary"}
-            onPress={() => {
-              router.push("/login");
-              // getDataFromAPI('test');
-            }}
-          >
-            Login
-          </Button>
+      <Button
+        ghost
+        size="sm"
+        auto
+        // color={"primary"}
+        onPress={() => {
+          router.push("/login");
+          // getDataFromAPI('test');
+        }}
+      >
+        Login
+      </Button>
     </Container>
   );
 };
 
+export async function getServerSideProps(context) {
+  const team1 = context.query.team1;
+  const team2 = context.query.team2;
 
-export async function getStaticProps(){
-  const SRH = (await getDocFromDB("Squads",'28579')).data().player.filter(row => !row.isHeader);
-  const CSK = (await getDocFromDB("Squads",'28544')).data().player.filter(row => !row.isHeader);
+  const team1SquadId = (await getDocFromDB("Teams", team1)).data().squadId;
+  const team2SquadId = (await getDocFromDB("Teams", team2)).data().squadId;
 
-  return {props: {list1:SRH, list2:CSK}}
+  const SRH = (await getDocFromDB("Squads", team1SquadId.toString()))
+    .data()
+    .player.filter((row) => !row.isHeader);
+
+  const CSK = (await getDocFromDB("Squads", team2SquadId.toString()))
+    .data()
+    .player.filter((row) => !row.isHeader);
+
+  return { props: { list1: SRH, list2: CSK } };
 }
 
 export default SelectionPage;
