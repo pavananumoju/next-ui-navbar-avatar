@@ -15,7 +15,7 @@ export default function App() {
         size="sm"
         auto
         // color={"primary"}
-        onPress={() => {
+        onClick={() => {
           router.push("/login");
         }}
       >

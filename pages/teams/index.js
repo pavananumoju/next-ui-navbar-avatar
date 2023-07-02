@@ -2,6 +2,7 @@ import TeamList from "@/components/team/teams-list";
 import ProtectedRoute from "@/layout/components/protected-route";
 import { db } from "@/firebase/firebase";
 import { doc, setDoc, getDocs, collection } from "firebase/firestore";
+import { getDocsFromDB } from "@/components/utils/firebase-db-utils";
 
 function TeamsPage(props) {
   const { teams } = props;
@@ -35,7 +36,8 @@ export async function getStaticProps() {
   //     setDoc(doc(db, "Teams", data.squads[i].teamId.toString()), teamSet);
   //  }
 
-  const querySnapshot = await getDocs(collection(db, "Teams"));
+  // const querySnapshot = await getDocs(collection(db, "Teams"));
+  const querySnapshot = await getDocsFromDB("Teams");
   let teams = [];
   querySnapshot.forEach((doc) => {
     teams.push(doc.data());

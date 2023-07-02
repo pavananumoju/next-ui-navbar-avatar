@@ -61,7 +61,8 @@ function MainNavbar() {
         activeColor="secondary"
         variant="highlight-rounded"
       >
-        <Navbar.Link onPress={()=>{router.push("/select-demo")}}>Features</Navbar.Link>
+        <Navbar.Link onClick={()=>{router.push("/fixtures")}}>Fixtures</Navbar.Link>
+        <Navbar.Link onClick={()=>{router.push("/select-demo")}}>Features</Navbar.Link>
         {/* <Navbar.Link isActive href="#">
           Customers
         </Navbar.Link> */}

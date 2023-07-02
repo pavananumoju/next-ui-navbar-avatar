@@ -1,28 +1,13 @@
+import { getDataFromAPI, getDocFromDB } from "@/components/utils/firebase-db-utils";
 import { Button, Grid, Spacer, Container } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-const SelectionPage = () => {
+const SelectionPage = (props) => {
 
 const router = useRouter();
 
-  const [list1, setList1] = useState([
-    { id: 1, name: "Item 1" },
-    { id: 2, name: "Item 2" },
-    { id: 3, name: "Item 3" },
-    { id: 4, name: "Item 4" },
-    { id: 5, name: "Item 5" },
-    { id: 6, name: "Item 6" },
-  ]);
-
-  const [list2, setList2] = useState([
-    { id: 7, name: "Item 7" },
-    { id: 8, name: "Item 8" },
-    { id: 9, name: "Item 9" },
-    { id: 10, name: "Item 10" },
-    { id: 11, name: "Item 11" },
-    { id: 12, name: "Item 12" },
-  ]);
+const {list1, list2} = props;
 
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -79,41 +64,6 @@ const router = useRouter();
 
   return (
     <Container justify="center" align="center">
-      <Grid.Container>
-        <Grid xs={6}>
-          <ul>
-            {list1.map((item) => (
-              <Button
-                size="sm"
-                key={item.id}
-                css={{ margin: 10 }}
-                onClick={() => handleItemClick("list1", item.id)}
-                className={isItemSelected(item.id) ? "selected" : ""}
-              >
-                {item.name}
-              </Button>
-            ))}
-          </ul>
-        </Grid>
-        <Grid xs={6}>
-          <ul>
-            {list2.map((item) => (
-              <Button
-                color="secondary"
-                size="sm"
-                css={{ margin: 10 }}
-                key={item.id}
-                onClick={() => handleItemClick("list2", item.id)}
-                className={isItemSelected(item.id) ? "selected" : ""}
-              >
-                {item.name}
-              </Button>
-            ))}
-          </ul>
-        </Grid>
-      </Grid.Container>
-
-      {/* <h2>Selected Items</h2> */}
       <ul>
         {selectedItems.map((item) => {
           let colorclass = "";
@@ -143,6 +93,41 @@ const router = useRouter();
         <p>Please select at least one item from each list</p>
       )}
       <Spacer y={5} />
+      <Grid.Container>
+        <Grid xs={6} justify="center">
+          <ul>
+            {list1.map((item) => (
+              <Button
+                size="sm"
+                key={item.id}
+                css={{ margin: 10 }}
+                onClick={() => handleItemClick("list1", item.id)}
+                className={isItemSelected(item.id) ? "selected" : ""}
+              >
+                {item.name}
+              </Button>
+            ))}
+          </ul>
+        </Grid>
+        <Grid xs={6} justify="center">
+          <ul>
+            {list2.map((item) => (
+              <Button
+                color="secondary"
+                size="sm"
+                css={{ margin: 10 }}
+                key={item.id}
+                onClick={() => handleItemClick("list2", item.id)}
+                className={isItemSelected(item.id) ? "selected" : ""}
+              >
+                {item.name}
+              </Button>
+            ))}
+          </ul>
+        </Grid>
+      </Grid.Container>
+
+      <Spacer y={5} />
           <Button
             ghost
             size="sm"
@@ -150,6 +135,7 @@ const router = useRouter();
             // color={"primary"}
             onPress={() => {
               router.push("/login");
+              // getDataFromAPI('test');
             }}
           >
             Login
@@ -157,5 +143,13 @@ const router = useRouter();
     </Container>
   );
 };
+
+
+export async function getStaticProps(){
+  const SRH = (await getDocFromDB("Squads",'28579')).data().player.filter(row => !row.isHeader);
+  const CSK = (await getDocFromDB("Squads",'28544')).data().player.filter(row => !row.isHeader);
+
+  return {props: {list1:SRH, list2:CSK}}
+}
 
 export default SelectionPage;
