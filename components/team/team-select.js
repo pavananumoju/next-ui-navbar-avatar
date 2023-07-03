@@ -8,6 +8,7 @@ import {
   Text,
   User,
   Image,
+  Loading,
 } from "@nextui-org/react";
 
 function TeamSelect(props) {
@@ -36,7 +37,9 @@ function TeamSelect(props) {
     return (
       <Container justify="center" align="center">
         <Spacer y={2} />
-        <div>Loading...</div>
+        <div>
+          <Loading size="lg" color="warning" type="points" />
+        </div>
       </Container>
     );
   }
