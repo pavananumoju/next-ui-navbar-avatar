@@ -145,14 +145,14 @@ function TeamSelect(props) {
               {team1SName}{" "}
             </Text>
             {list1.map((item) => (
-              <li>
+              <li key={item.id}>
                 <Button
                   // ghost
                   light
                   // shadow
                   size="sm"
                   color="primary"
-                  key={item.id}
+                  // key={item.id}
                   css={{ margin: 10 }}
                   onPress={() => handleItemClick("list1", item.id)}
                   className={isItemSelected(item.id) ? "selected" : ""}
@@ -188,7 +188,7 @@ function TeamSelect(props) {
               {team2SName}{" "}
             </Text>
             {list2.map((item) => (
-              <li>
+              <li key={item.id}>
                 <Button
                   // ghost
                   align="left"
