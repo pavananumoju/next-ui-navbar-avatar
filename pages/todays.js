@@ -9,6 +9,7 @@ function Todays(props) {
     <Container justify="center" align="center">
       <Spacer y={2} />
       <Text>Todays Matches</Text>
+      <Spacer y={2} />
       <MatchDetails matchData={fixtures[0]} />
     </Container>
   );

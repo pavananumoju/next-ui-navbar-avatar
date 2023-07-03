@@ -47,10 +47,10 @@ function MatchDetails(props) {
             <Col>
               <Button
                 size="xs"
-                onClick={() => handleMatchClick(
-                  data.match1_team1_Id,
-                  data.match1_team2_Id
-                )}
+                // auto
+                onPress={() =>
+                  handleMatchClick(data.match1_team1_Id, data.match1_team2_Id)
+                }
               >
                 {data.match1_team1} vs {data.match1_team2}
               </Button>
@@ -59,10 +59,10 @@ function MatchDetails(props) {
               {data.match2_team1 && (
                 <Button
                   size="xs"
-                  onClick={() => handleMatchClick(
-                    data.match2_team1_Id,
-                    data.match2_team2_Id
-                  )}
+                  // auto
+                  onPress={() =>
+                    handleMatchClick(data.match2_team1_Id, data.match2_team2_Id)
+                  }
                 >
                   {data.match2_team1} vs {data.match2_team2}
                 </Button>
