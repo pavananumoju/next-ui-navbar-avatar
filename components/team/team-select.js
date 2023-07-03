@@ -1,28 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { getDocFromDB } from "@/components/utils/firebase-db-utils";
-import { Button, Grid, Spacer, Container } from "@nextui-org/react";
+import { Button, Grid, Spacer, Container, Text, User } from "@nextui-org/react";
 
 function TeamSelect(props) {
-
   const [selectedItems, setSelectedItems] = useState([]);
 
   const [team1, team2] = props.teams;
 
   const [list1, setList1] = useState();
   const [list2, setList2] = useState();
+  const [team1SName, setTeam1SName] = useState();
+  const [team2SName, setTeam2SName] = useState();
 
   useEffect(() => {
     if (team1 != undefined && team2 != undefined) {
       const test = getSquadsForTeams(team1, team2).then((data) => {
         setList1(data.list1);
         setList2(data.list2);
+        setTeam1SName(data.team1SName);
+        setTeam2SName(data.team2SName);
         return;
       });
     }
   }, []);
 
   if (list1 === undefined || list2 === undefined) {
-    return <div>Loading...</div>;
+    return (
+      <Container justify="center" align="center">
+        <Spacer y={2} />
+        <div>Loading...</div>
+      </Container>
+    );
   }
 
   const handleItemClick = (listName, itemId) => {
@@ -90,6 +98,7 @@ function TeamSelect(props) {
           // console.log(item.id, colorclass);
           return (
             <Button
+              ghost
               key={item.id}
               size="sm"
               color={colorclass}
@@ -113,40 +122,68 @@ function TeamSelect(props) {
       ) : (
         <>
           <Spacer y={2} />
-          <Button color="warning">Submit</Button>
+          <Button color="warning" ghost>
+            Submit
+          </Button>
         </>
       )}
 
-      <Spacer y={5} />
+      <Spacer y={2} />
       <Grid.Container>
-        <Grid xs={6} justify="center">
-          <ul>
+        <Grid xs={6} md={6} lg={6} justify="center">
+          <ul align="left">
+            <Text align="center" color="primary">{team1SName} </Text>
             {list1.map((item) => (
-              <Button
-                size="sm"
-                key={item.id}
-                css={{ margin: 10 }}
-                onPress={() => handleItemClick("list1", item.id)}
-                className={isItemSelected(item.id) ? "selected" : ""}
-              >
-                {item.name}
-              </Button>
+              // <Button
+              //   ghost
+              //   size="sm"
+              //   key={item.id}
+              //   css={{ margin: 10 }}
+              //   onPress={() => handleItemClick("list1", item.id)}
+              //   className={isItemSelected(item.id) ? "selected" : ""}
+              // >
+              <li>
+                <User
+                  key={item.id}
+                  bordered
+                  color="primary"
+                  // css={{ margin: 2 }}
+                  size="sm"
+                  onClick={() => handleItemClick("list1", item.id)}
+                  src={`https://i.cricketcb.com/stats/img/faceImages/${item.id}.jpg`}
+                  name={item.name}
+                />
+              </li>
+              // </Button>
             ))}
           </ul>
         </Grid>
-        <Grid xs={6} justify="center">
-          <ul>
+        <Grid xs={6} md={6} lg={6} justify="center">
+        <ul align="left">
+            <Text align="center" color="secondary">{team2SName} </Text>
             {list2.map((item) => (
-              <Button
-                color="secondary"
-                size="sm"
-                css={{ margin: 10 }}
-                key={item.id}
-                onPress={() => handleItemClick("list2", item.id)}
-                className={isItemSelected(item.id) ? "selected" : ""}
-              >
-                {item.name}
-              </Button>
+              // <Button
+              //   ghost
+              //   color="secondary"
+              //   size="sm"
+              //   css={{ margin: 10 }}
+              //   key={item.id}
+              //   onPress={() => handleItemClick("list2", item.id)}
+              //   className={isItemSelected(item.id) ? "selected" : ""}
+              // >
+              <li>
+                <User
+                  key={item.id}
+                  bordered
+                  color="secondary"
+                  // css={{ margin: 2 }}
+                  size="sm"
+                  onClick={() => handleItemClick("list2", item.id)}
+                  src={`https://i.cricketcb.com/stats/img/faceImages/${item.id}.jpg`}
+                  name={item.name}
+                />
+              </li>
+              // </Button>
             ))}
           </ul>
         </Grid>
@@ -162,6 +199,12 @@ async function getSquadsForTeams(team1, team2) {
   const team2SquadId = (await getDocFromDB("Teams", team2.toString())).data()
     .squadId;
 
+  const team1SName = (await getDocFromDB("IPLTeams", team1.toString())).data()
+    .teamSName;
+
+  const team2SName = (await getDocFromDB("IPLTeams", team2.toString())).data()
+    .teamSName;
+
   const list1 = (await getDocFromDB("Squads", team1SquadId.toString()))
     .data()
     .player.filter((row) => !row.isHeader);
@@ -170,7 +213,11 @@ async function getSquadsForTeams(team1, team2) {
     .data()
     .player.filter((row) => !row.isHeader);
 
-  return { list1, list2 };
+  team1SName != undefined &&
+    team2SName != undefined &&
+    console.log(team1SName, team2SName);
+
+  return { team1SName, list1, team2SName, list2 };
 }
 
 export default TeamSelect;

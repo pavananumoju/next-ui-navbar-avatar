@@ -1,5 +1,13 @@
 import { db } from "@/firebase/firebase";
-import { doc, getDoc, getDocs, setDoc, collection } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  collection,
+  query,
+  where,
+} from "firebase/firestore";
 
 export const getDataFromAPI = (squadId) => {
   const URL = `https://cricbuzz-cricket.p.rapidapi.com/series/v1/5945/squads/${squadId}`;
@@ -26,7 +34,9 @@ export async function getDocFromDB(path, pathSegment) {
   // console.log('getDocFromDB:'+path, pathSegment)
   const ref = getDocRef(path, pathSegment);
   const docSnap = await getDoc(ref);
+  // docSnap != undefined && docSnap.data() != undefined && console.log('docsnap:'+docSnap.data());
   // return docSnap.data().player;
+  // return docSnap != undefined && docSnap.data() != undefined && docSnap;
   return docSnap;
 }
 

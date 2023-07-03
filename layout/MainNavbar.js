@@ -62,7 +62,7 @@ function MainNavbar() {
         variant="highlight-rounded"
       >
         <Navbar.Link onClick={()=>{router.push("/fixtures")}}>Fixtures</Navbar.Link>
-        <Navbar.Link onClick={()=>{router.push("/select-demo")}}>Features</Navbar.Link>
+        <Navbar.Link onClick={()=>{router.push("/todays")}}>Todays</Navbar.Link>
         {/* <Navbar.Link isActive href="#">
           Customers
         </Navbar.Link> */}
@@ -113,6 +113,10 @@ function MainNavbar() {
                 if (actionKey === "rules") {
                   router.push("/rules");
                 }
+                if (actionKey === "loaddata") {
+                  router.push("/loaddata");
+                }
+                
               }}
             >
               {!user.uid ? (
@@ -149,9 +153,15 @@ function MainNavbar() {
                   Teams
                 </Dropdown.Item>
               ) : null}
+
               {user.uid ? (
                 <Dropdown.Item key="rules">Rules</Dropdown.Item>
               ) : null}
+
+              {user.uid ? (
+                <Dropdown.Item key="loaddata">LoadData</Dropdown.Item>
+              ) : null}
+              
               <Dropdown.Item key="help_and_feedback" withDivider>
                 Help & Feedback
               </Dropdown.Item>
