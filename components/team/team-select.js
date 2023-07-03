@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { getDocFromDB } from "@/components/utils/firebase-db-utils";
-import { Button, Grid, Spacer, Container, Text, User } from "@nextui-org/react";
+import {
+  Button,
+  Grid,
+  Spacer,
+  Container,
+  Text,
+  User,
+  Image,
+} from "@nextui-org/react";
 
 function TeamSelect(props) {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -100,9 +108,10 @@ function TeamSelect(props) {
             <Button
               ghost
               key={item.id}
+              
               size="sm"
               color={colorclass}
-              css={{ margin: 10 }}
+              css={{ margin: 10, textAlign: "center" }}
               onPress={() => handleSelectedItemClick(item.id)}
             >
               {item.name}
@@ -132,58 +141,88 @@ function TeamSelect(props) {
       <Grid.Container>
         <Grid xs={6} md={6} lg={6} justify="center">
           <ul align="left">
-            <Text align="center" color="primary">{team1SName} </Text>
+            <Text align="center" color="primary">
+              {team1SName}{" "}
+            </Text>
             {list1.map((item) => (
-              // <Button
-              //   ghost
-              //   size="sm"
-              //   key={item.id}
-              //   css={{ margin: 10 }}
-              //   onPress={() => handleItemClick("list1", item.id)}
-              //   className={isItemSelected(item.id) ? "selected" : ""}
-              // >
               <li>
-                <User
-                  key={item.id}
-                  bordered
+                <Button
+                  // ghost
+                  light
+                  // shadow
+                  size="sm"
                   color="primary"
+                  key={item.id}
+                  css={{ margin: 10 }}
+                  onPress={() => handleItemClick("list1", item.id)}
+                  className={isItemSelected(item.id) ? "selected" : ""}
+                >
+                  <Image
+                    showSkeleton
+                    width={25}
+                    height={25}
+                    src={`https://i.cricketcb.com/stats/img/faceImages/${item.id}.jpg`}
+                    alt="Default Image"
+                    // objectFit="cover"
+                  />
+                  <Spacer x={0.5}/>
+                  {item.name}
+                  {/* <User
+                  key={item.id}
+                  // bordered
+                  // color="primary"
                   // css={{ margin: 2 }}
                   size="sm"
-                  onClick={() => handleItemClick("list1", item.id)}
+                  // onClick={() => handleItemClick("list1", item.id)}
                   src={`https://i.cricketcb.com/stats/img/faceImages/${item.id}.jpg`}
                   name={item.name}
-                />
+                /> */}
+                </Button>
               </li>
-              // </Button>
             ))}
           </ul>
         </Grid>
         <Grid xs={6} md={6} lg={6} justify="center">
-        <ul align="left">
-            <Text align="center" color="secondary">{team2SName} </Text>
+          <ul align="left">
+            <Text align="center" color="secondary">
+              {team2SName}{" "}
+            </Text>
             {list2.map((item) => (
-              // <Button
-              //   ghost
-              //   color="secondary"
-              //   size="sm"
-              //   css={{ margin: 10 }}
-              //   key={item.id}
-              //   onPress={() => handleItemClick("list2", item.id)}
-              //   className={isItemSelected(item.id) ? "selected" : ""}
-              // >
               <li>
-                <User
-                  key={item.id}
-                  bordered
+                <Button
+                  // ghost
+                  align="left"
+                  // shadow
+                  light
                   color="secondary"
-                  // css={{ margin: 2 }}
                   size="sm"
-                  onClick={() => handleItemClick("list2", item.id)}
-                  src={`https://i.cricketcb.com/stats/img/faceImages/${item.id}.jpg`}
-                  name={item.name}
-                />
+                  css={{ margin: 10 }}
+                  key={item.id}
+                  onPress={() => handleItemClick("list2", item.id)}
+                  className={isItemSelected(item.id) ? "selected" : ""}
+                >
+                    <Image
+                    showSkeleton
+                    width={25}
+                    height={25}
+                    src={`https://i.cricketcb.com/stats/img/faceImages/${item.id}.jpg`}
+                    alt="Default Image"
+                    // objectFit="cover"
+                  />
+                  <Spacer x={0.5}/>
+                  {item.name}
+                  {/* <User
+                    key={item.id}
+                    // bordered
+                    // color="secondary"
+                    // css={{ margin: 2 }}
+                    size="sm"
+                    // onClick={() => handleItemClick("list2", item.id)}
+                    src={`https://i.cricketcb.com/stats/img/faceImages/${item.id}.jpg`}
+                    name={item.name}
+                  /> */}
+                </Button>
               </li>
-              // </Button>
             ))}
           </ul>
         </Grid>
