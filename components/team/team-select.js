@@ -38,7 +38,7 @@ function TeamSelect(props) {
       <Container justify="center" align="center">
         <Spacer y={2} />
         <div>
-          <Loading size="lg" color="warning" type="points" />
+          <Loading size="lg" color="warning" />
         </div>
       </Container>
     );
@@ -151,6 +151,7 @@ function TeamSelect(props) {
               <li key={item.id}>
                 <Button
                   // ghost
+                  bordered
                   light
                   // shadow
                   size="sm"
@@ -185,8 +186,8 @@ function TeamSelect(props) {
             ))}
           </ul>
         </Grid>
-        <Grid xs={6} md={6} lg={6} justify="center">
-          <ul align="left">
+        <Grid xs={6} md={6} lg={6}>
+          <ul align="right">
             <Text align="center" color="secondary">
               {team2SName}{" "}
             </Text>
@@ -198,6 +199,7 @@ function TeamSelect(props) {
                   // shadow
                   light
                   color="secondary"
+                  bordered
                   size="sm"
                   css={{ margin: 10 }}
                   key={item.id}

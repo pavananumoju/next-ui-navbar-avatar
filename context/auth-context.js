@@ -16,6 +16,7 @@ export const AuthContextProvider = (props) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        // console.log(user);
         setUser({
           email: user.email,
           uid: user.uid,
@@ -34,19 +35,36 @@ export const AuthContextProvider = (props) => {
   };
 
   const logIn = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        console.log('user login success');
+        const user = userCredential.user;
+        setUser({
+          email: user.email,
+          uid: user.uid,
+        });
+        // ...
+      })
+      .catch((error) => {
+        console.log('error while login');
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
   };
 
   const logOut = async () => {
     setUser({ email: null, uid: null });
     // await signOut(auth);
-    signOut(auth).then(() => {
-      // Sign-out successful.
-      console.log('signout success');
-    }).catch((error) => {
-      // An error happened.
-      console.log('error during signout: '+error);
-    });
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        console.log("signout success");
+      })
+      .catch((error) => {
+        // An error happened.
+        console.log("error during signout: " + error);
+      });
   };
 
   return (

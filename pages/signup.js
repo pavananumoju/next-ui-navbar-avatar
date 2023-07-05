@@ -48,6 +48,7 @@ function SignupPage() {
           <Input
             type="email"
             label="Email"
+            width="250px"
             bordered
             color="secondary"
             labelPlaceholder="Email"
@@ -61,6 +62,7 @@ function SignupPage() {
           <Spacer y={1.5} />
           <Input.Password
             bordered
+            width="250px"
             color="secondary"
             label="Password"
             type="password"
@@ -75,8 +77,9 @@ function SignupPage() {
           <Spacer y={1.5} />
           <Input.Password
             bordered
+            width="250px"
             color="secondary"
-            label="password_confirm"
+            label="Confirm Password"
             type="password"
             {...register("password_confirm", {
               required: "Verify your password",
