@@ -24,7 +24,7 @@ function SignupPage() {
       console.log(data);
       if (data.password_confirm != data.password) {
         setIsLoading(false);
-        console.log("passwords dont match");
+        // console.log("passwords dont match");
         setMessage("passwords dont match");
       } else {
         await signUp(data.email, data.password);
@@ -95,7 +95,7 @@ function SignupPage() {
             Submit
           </Button>
           <Spacer y={2} />
-          {isLoading && <Text color="green">Loading</Text>}
+          {isLoading && <Loading size="lg" color="warning" />}
           {!isLoading && message && <Text color="orange">{message}</Text>}
           <Spacer y={2} />
           <Button

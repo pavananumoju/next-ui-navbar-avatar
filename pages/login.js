@@ -2,7 +2,7 @@ import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 import Link from "next/link";
-import { Container, Text, Input, Button, Spacer } from "@nextui-org/react";
+import { Container, Text, Input, Button, Spacer, Loading } from "@nextui-org/react";
 import { useState } from "react";
 
 function Login() {
@@ -71,7 +71,7 @@ function Login() {
             Submit
           </Button>
           <Spacer y={2} />
-          {isLoading && <Text color="green">Loading</Text>}
+          {isLoading && <Loading size="lg" color="warning" />}
           {!isLoading && message && <Text color="orange">{message}</Text>}
           <Spacer y={2} />
           <Button
