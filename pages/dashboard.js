@@ -25,7 +25,7 @@ const DashboardPage = () => {
           }}
           weight="bold"
         >
-          "{user.email}"
+          "{user.displayName}"
         </Text>
       </Container>
     </ProtectedRoute>

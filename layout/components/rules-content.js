@@ -1,6 +1,24 @@
-import { Container, Table } from "@nextui-org/react";
+import { Button, Container, Spacer, Table } from "@nextui-org/react";
+import { useAuth } from "@/context/auth-context";
+import { getDocRef, setDocToDB, setModifyDocToDB } from "@/components/utils/firebase-db-utils";
+import { useRouter } from "next/router";
 
 function RulesContent() {
+  const { user } = useAuth();
+  const router = useRouter();
+
+  function handleTnCAccept() {
+    if (user.uid) {
+      console.log("TnC accepted by " + user.email);
+      const docRef = getDocRef("Users", user.email);
+      const data = { isTnCAccepted: true };
+      setModifyDocToDB(docRef, data);
+      router.push("/dashboard");
+    } else {
+      console.log("User is null");
+    }
+  }
+
   const columns = [
     {
       key: "sno",
@@ -106,6 +124,8 @@ function RulesContent() {
           )}
         </Table.Body>
       </Table>
+      <Spacer y={1} />
+      <Button onPress={handleTnCAccept}>Accept</Button>
     </Container>
   );
 }

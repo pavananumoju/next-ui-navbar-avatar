@@ -37,7 +37,7 @@ export async function getDocFromDB(path, pathSegment) {
   // docSnap != undefined && docSnap.data() != undefined && console.log('docsnap:'+docSnap.data());
   // return docSnap.data().player;
   // return docSnap != undefined && docSnap.data() != undefined && docSnap;
-  return docSnap;
+  return await docSnap;
 }
 
 // export async function getDocFromDB(path, pathSegment) {
@@ -45,8 +45,12 @@ export async function getDocFromDB(path, pathSegment) {
 //   return await getDoc(ref);
 // }
 
-export function setDocToDB(docRef, data) {
-  setDoc(docRef, data);
+export async function setDocToDB(docRef, data) {
+  return await setDoc(docRef, data);
+}
+
+export async function setModifyDocToDB(docRef, data) {
+  return await setDoc(docRef, data, {merge:true});
 }
 
 export async function getDocsFromDB(path) {

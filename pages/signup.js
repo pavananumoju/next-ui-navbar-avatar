@@ -1,7 +1,14 @@
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
-import { Text, Spacer, Input, Button, Container } from "@nextui-org/react";
+import {
+  Text,
+  Spacer,
+  Input,
+  Button,
+  Container,
+  Loading,
+} from "@nextui-org/react";
 import { useState } from "react";
 
 function SignupPage() {
@@ -27,8 +34,7 @@ function SignupPage() {
         // console.log("passwords dont match");
         setMessage("passwords dont match");
       } else {
-        await signUp(data.email, data.password);
-        router.push("/dashboard");
+        await signUp(data.email, data.password, data.name);
         setIsLoading(false);
       }
     } catch (error) {
@@ -46,6 +52,18 @@ function SignupPage() {
       <FormProvider {...methods}>
         <form action="" onSubmit={handleSubmit(onSubmit)}>
           <Input
+            type="text"
+            label="Name"
+            width="250px"
+            bordered
+            color="secondary"
+            labelPlaceholder="Name"
+            {...register("name", { required: "Name is required" })}
+          />
+          {errors.name && <Text color="warning">{errors.name.message}</Text>}
+
+          <Spacer y={1} />
+          <Input
             type="email"
             label="Email"
             width="250px"
@@ -55,11 +73,9 @@ function SignupPage() {
             {...register("email", { required: "Email is required" })}
           />
 
-          {errors.email && (
-            <p className="text-red-400">{errors.email.message}</p>
-          )}
+          {errors.email && <Text color="warning">{errors.email.message}</Text>}
 
-          <Spacer y={1.5} />
+          <Spacer y={1} />
           <Input.Password
             bordered
             width="250px"
@@ -71,10 +87,10 @@ function SignupPage() {
           />
 
           {errors.password && (
-            <p className="text-red-400">{errors.password.message}</p>
+            <Text color="warning">{errors.password.message}</Text>
           )}
 
-          <Spacer y={1.5} />
+          <Spacer y={1} />
           <Input.Password
             bordered
             width="250px"
@@ -88,7 +104,7 @@ function SignupPage() {
           />
 
           {errors.password_confirm && (
-            <p className="text-red-400">{errors.password_confirm.message}</p>
+            <Text color="warning">{errors.password_confirm.message}</Text>
           )}
           <Spacer y={1} />
           <Button color={"primary"} ghost type="submit">

@@ -28,7 +28,6 @@ function MainNavbar() {
   const handleLogout = async () => {
     try {
       await logOut();
-      // router.push("/login");
     } catch (error) {
       console.log(error.message);
     }
@@ -61,8 +60,25 @@ function MainNavbar() {
         activeColor="secondary"
         variant="highlight-rounded"
       >
-        <Navbar.Link onClick={()=>{router.push("/fixtures")}}>Fixtures</Navbar.Link>
-        <Navbar.Link onClick={()=>{router.push("/todays")}}>Todays</Navbar.Link>
+        {user.uid ? (
+          <>
+            <Navbar.Link
+              onClick={() => {
+                router.push("/fixtures");
+              }}
+            >
+              Fixtures
+            </Navbar.Link>
+            <Navbar.Link
+              onClick={() => {
+                router.push("/todays");
+              }}
+            >
+              Todays
+            </Navbar.Link>
+          </>
+        ) : null}
+
         {/* <Navbar.Link isActive href="#">
           Customers
         </Navbar.Link> */}
@@ -104,9 +120,6 @@ function MainNavbar() {
                 if (actionKey === "logout") {
                   handleLogout();
                 }
-                if (actionKey === "login") {
-                  router.push("/login");
-                }
                 if (actionKey === "teams") {
                   router.push("/teams");
                 }
@@ -116,21 +129,10 @@ function MainNavbar() {
                 if (actionKey === "loaddata") {
                   router.push("/loaddata");
                 }
-                
               }}
             >
               {!user.uid ? (
-                <Dropdown.Item
-                  key="login"
-                  css={{ height: "$18" }}
-                  aria-label="string"
-                >
-                  <Link>
-                    <Text b color="inherit" css={{ d: "flex" }}>
-                      Login
-                    </Text>
-                  </Link>
-                </Dropdown.Item>
+                null
               ) : (
                 <Dropdown.Item
                   key="profile"
@@ -143,7 +145,7 @@ function MainNavbar() {
                   aria-label="string"
                 >
                   <Text b color="inherit" css={{ d: "flex" }}>
-                    {user.email}
+                    {user.displayName}
                   </Text>
                 </Dropdown.Item>
               )}
@@ -161,7 +163,7 @@ function MainNavbar() {
               {user.uid ? (
                 <Dropdown.Item key="loaddata">LoadData</Dropdown.Item>
               ) : null}
-              
+
               <Dropdown.Item key="help_and_feedback" withDivider>
                 Help & Feedback
               </Dropdown.Item>

@@ -1,7 +1,6 @@
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
-import Link from "next/link";
 import { Container, Text, Input, Button, Spacer, Loading } from "@nextui-org/react";
 import { useState } from "react";
 
@@ -13,7 +12,8 @@ function Login() {
   const router = useRouter();
 
   if (user.uid) {
-    router.push("/dashboard");
+    // console.log(user);
+    user.isTnCAccepted ? router.push("/dashboard") : router.push("/rules")
   }
 
   const {
@@ -28,6 +28,7 @@ function Login() {
       console.log(data);
       await logIn(data.email, data.password);
       // router.push("/dashboard");
+      // console.log('setting loading false');
       setIsLoading(false);
     } catch (error) {
       console.log(error.message);
@@ -47,24 +48,26 @@ function Login() {
             type="email"
             label="Email"
             bordered
+            width="250px"
             color="secondary"
             labelPlaceholder="Email"
             {...register("email", { required: "Email is required" })}
           />
           {errors.email && (
-            <p className="text-red-400">{errors.email.message}</p>
+            <Text color="warning">{errors.email.message}</Text>
           )}
           <Spacer y={1.5} />
           <Input.Password
             bordered
             color="secondary"
             label="Password"
+            width="250px"
             type="password"
             {...register("password", { required: "Password is required" })}
             labelPlaceholder="Password"
           />
           {errors.password && (
-            <p className="text-red-400">{errors.password.message}</p>
+            <Text color="warning">{errors.password.message}</Text>
           )}
           <Spacer y={1} />
           <Button color={"primary"} ghost type="submit">
