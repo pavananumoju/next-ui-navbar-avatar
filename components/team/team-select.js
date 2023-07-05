@@ -159,7 +159,7 @@ function TeamSelect(props) {
                   // key={item.id}
                   css={{ margin: 10 }}
                   onPress={() => handleItemClick("list1", item.id)}
-                  className={isItemSelected(item.id) ? "selected" : ""}
+                  // className={isItemSelected(item.id) ? "selected" : ""}
                 >
                   <Image
                     showSkeleton
@@ -186,7 +186,7 @@ function TeamSelect(props) {
             ))}
           </ul>
         </Grid>
-        <Grid xs={6} md={6} lg={6}>
+        <Grid xs={6} md={6} lg={6} justify="center">
           <ul align="right">
             <Text align="center" color="secondary">
               {team2SName}{" "}
@@ -204,7 +204,7 @@ function TeamSelect(props) {
                   css={{ margin: 10 }}
                   key={item.id}
                   onPress={() => handleItemClick("list2", item.id)}
-                  className={isItemSelected(item.id) ? "selected" : ""}
+                  // className={isItemSelected(item.id) ? "selected" : ""}
                 >
                     <Image
                     showSkeleton
