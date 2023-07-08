@@ -61,6 +61,7 @@ export async function getStaticProps() {
 
   return {
     props: { fixtures: matchDetails, posts: { match1_posts, match2_posts } },
+    revalidate: 1,
   };
 }
 
