@@ -1,18 +1,13 @@
-import {
-  Button,
-  Container,
-  Spacer,
-  Text,
-  Card,
-  Row,
-  Col,
-} from "@nextui-org/react";
+import { Spacer, Col, Card, Grid, Text, Button, Row } from "@nextui-org/react";
 import { useRouter } from "next/router";
 
 function MatchDetails(props) {
   const router = useRouter();
 
   const { matchData } = props;
+  const { match1_posts, match2_posts } = props.userPosts;
+  // console.log(match1_posts)
+
   const mdm = matchData.matchDetailsMap;
   // console.log(mdm);
   const data =
@@ -31,46 +26,128 @@ function MatchDetails(props) {
       : null;
   // console.log(data);
 
-  function handleMatchClick(team1_id, team2_id) {
+  function handleMatchClick(match, team1_id, team2_id) {
     // console.log(team1_id, team2_id);
-    router.push(`/select-demo/?team1=${team1_id}&team2=${team2_id}`);
+    const dateObj = new Date(data.date);
+    const formattedDate = dateObj
+      .toLocaleDateString("en-GB", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
+      })
+      .replace(/ /g, "_");
+    router.push(
+      `/select-demo/?date=${formattedDate}&match=${match}&team1=${team1_id}&team2=${team2_id}`
+    );
   }
 
   return (
     <>
       {data && (
         <>
-          <Row gap={0} key={data}>
+          <Text size={15} color="secondary">
+            {data.date}
+          </Text>
+          <Spacer y={1} />
+
+          <Row>
             <Col>
-              <Text size={12}>{data.date}</Text>
+              <Text>Match - 1</Text>
             </Col>
             <Col>
               <Button
-                size="xs"
+                size="sm"
                 // auto
                 onPress={() =>
-                  handleMatchClick(data.match1_team1_Id, data.match1_team2_Id)
+                  handleMatchClick(
+                    "m1",
+                    data.match1_team1_Id,
+                    data.match1_team2_Id
+                  )
                 }
               >
                 {data.match1_team1} vs {data.match1_team2}
               </Button>
             </Col>
-            <Col>
-              {data.match2_team1 && (
+          </Row>
+          <Spacer y={1} />
+          <ul>
+            {match1_posts &&
+              match1_posts.map((post) => (
+                <Grid.Container gap={1}>
+                  <Card
+                    isPressable
+                    isHoverable
+                    variant="bordered"
+                    css={{ mw: "600px" }}
+                  >
+                    <Card.Body>
+                      <Row align="center">
+                        <Col css={{ display: "flex" }}>
+                          <Text color="warning">{post.email}</Text>
+                        </Col>
+                        <Col>
+                          <Text>{post.p1.name}</Text>
+                          <Text>{post.p2.name}</Text>
+                          <Text>{post.p3.name}</Text>
+                        </Col>
+                      </Row>
+                    </Card.Body>
+                  </Card>
+                </Grid.Container>
+              ))}
+          </ul>
+          <Spacer y={1} />
+          {data.match2_team1 && (
+            <Row>
+              <Col>
+                <Text>Match - 2</Text>
+              </Col>
+              <Col>
                 <Button
-                  size="xs"
+                  size="sm"
                   // auto
                   onPress={() =>
-                    handleMatchClick(data.match2_team1_Id, data.match2_team2_Id)
+                    handleMatchClick(
+                      "m2",
+                      data.match2_team1_Id,
+                      data.match2_team2_Id
+                    )
                   }
                 >
                   {data.match2_team1} vs {data.match2_team2}
                 </Button>
-              )}
-            </Col>
-          </Row>
+              </Col>
+            </Row>
+          )}
 
-          <Spacer y={0.5} />
+          <Spacer y={1} />
+          <ul>
+            {match2_posts &&
+              match2_posts.map((post) => (
+                <Grid.Container gap={1}>
+                  <Card
+                    isPressable
+                    isHoverable
+                    variant="bordered"
+                    css={{ mw: "600px" }}
+                  >
+                    <Card.Body>
+                      <Row align="center">
+                        <Col css={{ display: "flex" }}>
+                          <Text color="warning">{post.email}</Text>
+                        </Col>
+                        <Col>
+                          <Text>{post.p1.name}</Text>
+                          <Text>{post.p2.name}</Text>
+                          <Text>{post.p3.name}</Text>
+                        </Col>
+                      </Row>
+                    </Card.Body>
+                  </Card>
+                </Grid.Container>
+              ))}
+          </ul>
         </>
       )}
     </>

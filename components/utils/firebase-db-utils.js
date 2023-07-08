@@ -50,7 +50,7 @@ export async function setDocToDB(docRef, data) {
 }
 
 export async function setModifyDocToDB(docRef, data) {
-  return await setDoc(docRef, data, {merge:true});
+  return await setDoc(docRef, data, { merge: true });
 }
 
 export async function getDocsFromDB(path) {

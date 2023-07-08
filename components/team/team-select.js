@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getDocFromDB } from "@/components/utils/firebase-db-utils";
+import {
+  getDocFromDB,
+  getDocRef,
+  setDocToDB,
+} from "@/components/utils/firebase-db-utils";
+import { useAuth } from "@/context/auth-context";
 import {
   Button,
   Grid,
@@ -12,12 +17,26 @@ import {
 } from "@nextui-org/react";
 
 function TeamSelect(props) {
+  const { user } = useAuth();
+
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const [team1, team2] = props.teams;
+  const { date, match, team1, team2 } = props.teamProps;
+  // const dt = new Date(date);
+
+  // console.log(date, match, team1, team2);
+
+  // const formattedDate = dt.toLocaleDateString("en-GB", {
+  //   year: "numeric",
+  //   month: "long",
+  //   day: "2-digit",
+  // });
+  // console.log("submitting user team for " + formattedDate);
 
   const [list1, setList1] = useState();
   const [list2, setList2] = useState();
+  const [isloading, setIsLoading] = useState(false);
+  const [displayMsg, setDisplayMsg] = useState();
   const [team1SName, setTeam1SName] = useState();
   const [team2SName, setTeam2SName] = useState();
 
@@ -96,8 +115,32 @@ function TeamSelect(props) {
     list1.some((item) => isItemSelected(item.id)) &&
     list2.some((item) => isItemSelected(item.id));
 
+  function handleUserTeamSubmission() {
+    setIsLoading(true);
+    
+    
+    console.log(selectedItems);
+    const docRef = getDocRef(`Posts/${date}/${match}`, user.email);
+    const email = user.email;
+    const team = {
+      match: match,
+      email: email,
+      p1: { id: selectedItems[0].id, name: selectedItems[0].name, mvp: true },
+      p2: { id: selectedItems[1].id, name: selectedItems[1].name, mvp: false },
+      p3: { id: selectedItems[2].id, name: selectedItems[2].name, mvp: false },
+    };
+
+    setDocToDB(docRef, team).then((x) => {
+      setDisplayMsg("Submit success");
+      setIsLoading(false);
+    });
+  }
+
   return (
     <Container justify="center" align="center">
+      <Text color="warning" b size="$md">
+        {match === "m1" ? "Match 1" : "Match 2"}
+      </Text>
       <ul>
         {selectedItems.map((item) => {
           let colorclass = "";
@@ -111,7 +154,6 @@ function TeamSelect(props) {
             <Button
               ghost
               key={item.id}
-              
               size="sm"
               color={colorclass}
               css={{ margin: 10, textAlign: "center" }}
@@ -131,10 +173,16 @@ function TeamSelect(props) {
 
       {selectedItems.length < 3 ? (
         <p>Please select 3 players</p>
+      ) : displayMsg ? (
+        <Text color="success" b>
+          {displayMsg}
+        </Text>
+      ) : isloading ? (
+        <Loading />
       ) : (
         <>
           <Spacer y={2} />
-          <Button color="warning" ghost>
+          <Button color="warning" ghost onClick={handleUserTeamSubmission}>
             Submit
           </Button>
         </>
@@ -169,7 +217,7 @@ function TeamSelect(props) {
                     alt="Default Image"
                     // objectFit="cover"
                   />
-                  <Spacer x={0.5}/>
+                  <Spacer x={0.5} />
                   {item.name}
                   {/* <User
                   key={item.id}
@@ -206,7 +254,7 @@ function TeamSelect(props) {
                   onPress={() => handleItemClick("list2", item.id)}
                   // className={isItemSelected(item.id) ? "selected" : ""}
                 >
-                    <Image
+                  <Image
                     showSkeleton
                     width={25}
                     height={25}
@@ -214,7 +262,7 @@ function TeamSelect(props) {
                     alt="Default Image"
                     // objectFit="cover"
                   />
-                  <Spacer x={0.5}/>
+                  <Spacer x={0.5} />
                   {item.name}
                   {/* <User
                     key={item.id}
