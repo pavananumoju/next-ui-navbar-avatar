@@ -45,7 +45,7 @@ function MatchDetails(props) {
     <>
       {data && (
         <>
-          <Text size={15} color="secondary">
+          <Text size={15} color="#ff4ecd">
             {data.date}
           </Text>
           <Spacer y={1} />
@@ -71,33 +71,6 @@ function MatchDetails(props) {
             </Col>
           </Row>
           <Spacer y={1} />
-          <ul>
-            {match1_posts &&
-              match1_posts.map((post) => (
-                <Grid.Container gap={1}>
-                  <Card
-                    isPressable
-                    isHoverable
-                    variant="bordered"
-                    css={{ mw: "600px" }}
-                  >
-                    <Card.Body>
-                      <Row align="center">
-                        <Col css={{ display: "flex" }}>
-                          <Text color="warning">{post.email}</Text>
-                        </Col>
-                        <Col>
-                          <Text>{post.p1.name}</Text>
-                          <Text>{post.p2.name}</Text>
-                          <Text>{post.p3.name}</Text>
-                        </Col>
-                      </Row>
-                    </Card.Body>
-                  </Card>
-                </Grid.Container>
-              ))}
-          </ul>
-          <Spacer y={1} />
           {data.match2_team1 && (
             <Row>
               <Col>
@@ -120,34 +93,68 @@ function MatchDetails(props) {
               </Col>
             </Row>
           )}
+          <Spacer y={1} />
+          {match1_posts && (
+            <ul>
+              <Text>Match 1</Text>
+              {match1_posts &&
+                match1_posts.map((post) => (
+                  <Grid.Container gap={1}>
+                    <Card
+                      isPressable
+                      isHoverable
+                      variant="bordered"
+                      css={{ mw: "600px" }}
+                    >
+                      <Card.Body>
+                        <Row align="center">
+                          <Col css={{ display: "flex" }}>
+                            <Text color="warning">{post.email}</Text>
+                          </Col>
+                          <Col>
+                            <Text>{post.p1.name}</Text>
+                            <Text>{post.p2.name}</Text>
+                            <Text>{post.p3.name}</Text>
+                          </Col>
+                        </Row>
+                      </Card.Body>
+                    </Card>
+                  </Grid.Container>
+                ))}
+            </ul>
+          )}
 
           <Spacer y={1} />
-          <ul>
-            {match2_posts &&
-              match2_posts.map((post) => (
-                <Grid.Container gap={1}>
-                  <Card
-                    isPressable
-                    isHoverable
-                    variant="bordered"
-                    css={{ mw: "600px" }}
-                  >
-                    <Card.Body>
-                      <Row align="center">
-                        <Col css={{ display: "flex" }}>
-                          <Text color="warning">{post.email}</Text>
-                        </Col>
-                        <Col>
-                          <Text>{post.p1.name}</Text>
-                          <Text>{post.p2.name}</Text>
-                          <Text>{post.p3.name}</Text>
-                        </Col>
-                      </Row>
-                    </Card.Body>
-                  </Card>
-                </Grid.Container>
-              ))}
-          </ul>
+
+          {match2_posts && (
+            <ul>
+              <Text>Match 2</Text>
+              {match2_posts &&
+                match2_posts.map((post) => (
+                  <Grid.Container gap={1}>
+                    <Card
+                      isPressable
+                      isHoverable
+                      variant="bordered"
+                      css={{ mw: "600px" }}
+                    >
+                      <Card.Body>
+                        <Row align="center">
+                          <Col css={{ display: "flex" }}>
+                            <Text color="warning">{post.email}</Text>
+                          </Col>
+                          <Col>
+                            <Text>{post.p1.name}</Text>
+                            <Text>{post.p2.name}</Text>
+                            <Text>{post.p3.name}</Text>
+                          </Col>
+                        </Row>
+                      </Card.Body>
+                    </Card>
+                  </Grid.Container>
+                ))}
+            </ul>
+          )}
         </>
       )}
     </>

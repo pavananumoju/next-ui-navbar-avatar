@@ -11,9 +11,9 @@ function Todays(props) {
   // console.log(fixtures);
   return (
     <Container justify="center" align="center">
-      <Spacer y={2} />
+      <Spacer y={1} />
       <Text>Todays Matches</Text>
-      <Spacer y={2} />
+      <Spacer y={1} />
       <MatchDetails matchData={fixtures[0]} userPosts={posts} />
     </Container>
   );
