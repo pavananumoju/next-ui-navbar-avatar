@@ -19,7 +19,7 @@ function Todays(props) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const date = new Date(2023, 3, 2);
   const formattedDate = date.toLocaleDateString("en-GB", {
     year: "numeric",
@@ -61,7 +61,6 @@ export async function getStaticProps() {
 
   return {
     props: { fixtures: matchDetails, posts: { match1_posts, match2_posts } },
-    revalidate: 1,
   };
 }
 
