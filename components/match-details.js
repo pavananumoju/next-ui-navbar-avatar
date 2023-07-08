@@ -99,7 +99,7 @@ function MatchDetails(props) {
               <Text>Match 1</Text>
               {match1_posts &&
                 match1_posts.map((post) => (
-                  <Grid.Container gap={1}>
+                  <Grid.Container gap={1} key={post.p1.name}>
                     <Card
                       isPressable
                       isHoverable
@@ -131,7 +131,7 @@ function MatchDetails(props) {
               <Text>Match 2</Text>
               {match2_posts &&
                 match2_posts.map((post) => (
-                  <Grid.Container gap={1}>
+                  <Grid.Container gap={1} key={post.p1.name}>
                     <Card
                       isPressable
                       isHoverable
