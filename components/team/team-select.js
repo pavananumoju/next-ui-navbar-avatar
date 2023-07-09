@@ -41,6 +41,7 @@ function TeamSelect(props) {
   const [list1, setList1] = useState();
   const [list2, setList2] = useState();
   const [isloading, setIsLoading] = useState(false);
+  const [disableSelection, setDisableSelection] = useState(false);
   const [displayMsg, setDisplayMsg] = useState();
   const [team1SName, setTeam1SName] = useState();
   const [team2SName, setTeam2SName] = useState();
@@ -167,9 +168,9 @@ function TeamSelect(props) {
     setDocToDB(docRef, team).then((x) => {
       setDisplayMsg("Submit success");
       setIsLoading(false);
+      setDisableSelection(true);
     });
-
-    router.push("/todays");
+    // router.push("/todays");
   }
 
   return (
@@ -178,7 +179,12 @@ function TeamSelect(props) {
         {match === "m1" ? "Match 1" : "Match 2"}
       </Text>
       <ul>
-        <Radio.Group label="Your Selection" onChange={setChecked} value={checked}>
+        <Radio.Group
+          label="Your Selection"
+          onChange={setChecked}
+          value={checked}
+          isDisabled={disableSelection}
+        >
           {selectedItems.map((item) => {
             let colorclass = "";
             const l1 = list1.filter((e) => e.id === item.id);
@@ -199,6 +205,7 @@ function TeamSelect(props) {
                 </Col>
                 <Col>
                   <Button
+                    disabled={disableSelection}
                     size={"xs"}
                     color={colorclass}
                     onPress={() => handleSelectedItemClick(item.id)}
@@ -221,9 +228,21 @@ function TeamSelect(props) {
       {selectedItems.length < 3 ? (
         <p>Please select 3 players</p>
       ) : displayMsg ? (
-        <Text color="success" b>
-          {displayMsg}
-        </Text>
+        <>
+          <Text color="success" b>
+            {displayMsg}
+          </Text>
+          <Button
+            onClick={() => {
+              router.push("/todays");
+            }}
+            size={"xs"}
+            color={"success"}
+            ghost
+          >
+            Back
+          </Button>
+        </>
       ) : isloading ? (
         <Loading />
       ) : (
