@@ -178,7 +178,7 @@ function TeamSelect(props) {
         {match === "m1" ? "Match 1" : "Match 2"}
       </Text>
       <ul>
-        <Radio.Group label="Your Selection" onChange={setChecked}>
+        <Radio.Group label="Your Selection" onChange={setChecked} value={checked}>
           {selectedItems.map((item) => {
             let colorclass = "";
             const l1 = list1.filter((e) => e.id === item.id);
