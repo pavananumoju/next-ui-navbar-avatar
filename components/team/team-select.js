@@ -145,9 +145,21 @@ function TeamSelect(props) {
       match: match,
       email: email,
       name: user.displayName,
-      p1: { id: selectedItems[0].id, name: selectedItems[0].name, mvp: checked === selectedItems[0].id ? true : false },
-      p2: { id: selectedItems[1].id, name: selectedItems[1].name, mvp: checked === selectedItems[1].id ? true : false },
-      p3: { id: selectedItems[2].id, name: selectedItems[2].name, mvp: checked === selectedItems[2].id ? true : false },
+      p1: {
+        id: selectedItems[0].id,
+        name: selectedItems[0].name,
+        mvp: checked === selectedItems[0].id ? true : false,
+      },
+      p2: {
+        id: selectedItems[1].id,
+        name: selectedItems[1].name,
+        mvp: checked === selectedItems[1].id ? true : false,
+      },
+      p3: {
+        id: selectedItems[2].id,
+        name: selectedItems[2].name,
+        mvp: checked === selectedItems[2].id ? true : false,
+      },
       updatedDate: formattedDate,
       updatedTime: formattedTime,
     };
@@ -166,7 +178,7 @@ function TeamSelect(props) {
         {match === "m1" ? "Match 1" : "Match 2"}
       </Text>
       <ul>
-        <Radio.Group label="Options" onChange={setChecked}>
+        <Radio.Group label="Your Selection" onChange={setChecked}>
           {selectedItems.map((item) => {
             let colorclass = "";
             const l1 = list1.filter((e) => e.id === item.id);
@@ -175,9 +187,13 @@ function TeamSelect(props) {
             if (!l2.length) colorclass = "primary";
 
             return (
-              <Row css={{ margin: 5, textAlign: "center" }}>
+              <Row css={{ margin: 5 }} key={item.id}>
                 <Col>
-                  <Radio value={item.id} key={item.id} color={colorclass}>
+                  <Radio
+                    value={item.id}
+                    color={colorclass}
+                    css={{ alignItems: "center" }}
+                  >
                     <Text color={colorclass}>{item.name}</Text>
                   </Radio>
                 </Col>
@@ -190,7 +206,6 @@ function TeamSelect(props) {
                     Remove
                   </Button>
                 </Col>
-
               </Row>
             );
           })}
@@ -240,7 +255,7 @@ function TeamSelect(props) {
                   light
                   size="sm"
                   color="primary"
-                  css={{ margin: 10, height:"auto"}}
+                  css={{ margin: 10, height: "auto" }}
                   onPress={() => handleItemClick("list1", item.id)}
                 >
                   {/* <Image
@@ -254,16 +269,16 @@ function TeamSelect(props) {
                   <Spacer x={0.5} />
                   {item.name} */}
                   <User
-                  key={item.id}
-                  bordered
-                  color="primary"
-                  // css={{ margin: 2 }}
-                  size="md"
-                  // onClick={() => handleItemClick("list1", item.id)}
-                  src={`https://i.cricketcb.com/stats/img/faceImages/${item.id}.jpg`}
-                  name={item.name}
-                  description={item.role}
-                />
+                    key={item.id}
+                    bordered
+                    color="primary"
+                    // css={{ margin: 2 }}
+                    size="lg"
+                    // onClick={() => handleItemClick("list1", item.id)}
+                    src={`https://i.cricketcb.com/stats/img/faceImages/${item.id}.jpg`}
+                    name={item.name}
+                    description={item.role}
+                  />
                 </Button>
               </li>
             ))}
@@ -284,7 +299,7 @@ function TeamSelect(props) {
                   color="secondary"
                   // bordered
                   size="sm"
-                  css={{ margin: 10, height:"auto"}}
+                  css={{ margin: 10, height: "auto" }}
                   key={item.id}
                   onPress={() => handleItemClick("list2", item.id)}
                   // className={isItemSelected(item.id) ? "selected" : ""}
@@ -300,12 +315,12 @@ function TeamSelect(props) {
                   <Spacer x={0.5} />
                   {item.name} */}
                   <User
-                  // css={{"padding-top":100, "padding-bottom":50 }}
+                    // css={{"padding-top":100, "padding-bottom":50 }}
                     key={item.id}
                     bordered
                     color="secondary"
                     // css={{ margin: 2 }}
-                    size="md"
+                    size="lg"
                     // onClick={() => handleItemClick("list2", item.id)}
                     src={`https://i.cricketcb.com/stats/img/faceImages/${item.id}.jpg`}
                     name={item.name}
