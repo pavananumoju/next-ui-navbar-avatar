@@ -11,6 +11,7 @@ import {
   Spacer,
   Container,
   Text,
+  User,
   Row,
   Col,
   Radio,
@@ -138,10 +139,6 @@ function TeamSelect(props) {
     };
     const formattedDate = new Date().toLocaleDateString("en-US", options);
 
-    
-    // console.log(formattedDate +' - '+ formattedTime);
-
-    // console.log(selectedItems);
     const docRef = getDocRef(`Posts/${date}/${match}`, user.email);
     const email = user.email;
     const team = {
@@ -177,7 +174,6 @@ function TeamSelect(props) {
             if (!l1.length) colorclass = "secondary";
             if (!l2.length) colorclass = "primary";
 
-            // console.log(item.id, colorclass);
             return (
               <Row css={{ margin: 5, textAlign: "center" }}>
                 <Col>
@@ -189,23 +185,12 @@ function TeamSelect(props) {
                   <Button
                     size={"xs"}
                     color={colorclass}
-                    // key={item.id}
                     onPress={() => handleSelectedItemClick(item.id)}
                   >
                     Remove
                   </Button>
                 </Col>
 
-                {/* <Button
-              ghost
-              key={item.id}
-              size="sm"
-              color={colorclass}
-              css={{ margin: 10, textAlign: "center" }}
-              onPress={() => handleSelectedItemClick(item.id)}
-            >
-              {item.name}
-            </Button> */}
               </Row>
             );
           })}
@@ -244,25 +229,21 @@ function TeamSelect(props) {
       <Spacer y={2} />
       <Grid.Container>
         <Grid xs={6} md={6} lg={6} justify="center">
-          <ul align="left">
-            <Text align="center" color="primary">
+          <ul align="center">
+            <Text color="primary" b>
               {team1SName}{" "}
             </Text>
             {list1.map((item) => (
               <li key={item.id}>
                 <Button
-                  // ghost
-                  bordered
+                  // bordered
                   light
-                  // shadow
                   size="sm"
                   color="primary"
-                  // key={item.id}
-                  css={{ margin: 10 }}
+                  css={{ margin: 10, height:"auto"}}
                   onPress={() => handleItemClick("list1", item.id)}
-                  // className={isItemSelected(item.id) ? "selected" : ""}
                 >
-                  <Image
+                  {/* <Image
                     showSkeleton
                     width={25}
                     height={25}
@@ -271,43 +252,44 @@ function TeamSelect(props) {
                     // objectFit="cover"
                   />
                   <Spacer x={0.5} />
-                  {item.name}
-                  {/* <User
+                  {item.name} */}
+                  <User
                   key={item.id}
-                  // bordered
-                  // color="primary"
+                  bordered
+                  color="primary"
                   // css={{ margin: 2 }}
-                  size="sm"
+                  size="md"
                   // onClick={() => handleItemClick("list1", item.id)}
                   src={`https://i.cricketcb.com/stats/img/faceImages/${item.id}.jpg`}
                   name={item.name}
-                /> */}
+                  description={item.role}
+                />
                 </Button>
               </li>
             ))}
           </ul>
         </Grid>
         <Grid xs={6} md={6} lg={6} justify="center">
-          <ul align="right">
-            <Text align="center" color="secondary">
+          <ul align="center">
+            <Text color="secondary" b>
               {team2SName}{" "}
             </Text>
             {list2.map((item) => (
               <li key={item.id}>
                 <Button
                   // ghost
-                  align="left"
+                  // align="left"
                   // shadow
                   light
                   color="secondary"
-                  bordered
+                  // bordered
                   size="sm"
-                  css={{ margin: 10 }}
+                  css={{ margin: 10, height:"auto"}}
                   key={item.id}
                   onPress={() => handleItemClick("list2", item.id)}
                   // className={isItemSelected(item.id) ? "selected" : ""}
                 >
-                  <Image
+                  {/* <Image
                     showSkeleton
                     width={25}
                     height={25}
@@ -316,17 +298,19 @@ function TeamSelect(props) {
                     // objectFit="cover"
                   />
                   <Spacer x={0.5} />
-                  {item.name}
-                  {/* <User
+                  {item.name} */}
+                  <User
+                  // css={{"padding-top":100, "padding-bottom":50 }}
                     key={item.id}
-                    // bordered
-                    // color="secondary"
+                    bordered
+                    color="secondary"
                     // css={{ margin: 2 }}
-                    size="sm"
+                    size="md"
                     // onClick={() => handleItemClick("list2", item.id)}
                     src={`https://i.cricketcb.com/stats/img/faceImages/${item.id}.jpg`}
                     name={item.name}
-                  /> */}
+                    description={item.role}
+                  />
                 </Button>
               </li>
             ))}

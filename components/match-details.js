@@ -63,37 +63,15 @@ function MatchDetails(props) {
     <>
       {data && (
         <>
-          <Text size={15} color="#ff4ecd">
-            {data.date}
-          </Text>
-          <Spacer y={1} />
-
-          <Row>
-            <Col>
-              <Text>Match - 1</Text>
-            </Col>
-            <Col>
-              <Button
-                disabled={data.date != today}
-                size="sm"
-                // auto
-                onPress={() =>
-                  handleMatchClick(
-                    "m1",
-                    data.match1_team1_Id,
-                    data.match1_team2_Id
-                  )
-                }
-              >
-                {data.match1_team1} vs {data.match1_team2}
-              </Button>
-            </Col>
-          </Row>
-          <Spacer y={1} />
-          {data.match2_team1 && (
+          <Card>
+          <Spacer y={0.5} />
+            <Text size={15} b color="#ff4ecd">
+              {data.date}
+            </Text>
+            <Spacer y={0.5} />
             <Row>
               <Col>
-                <Text>Match - 2</Text>
+                <Text>Match - 1</Text>
               </Col>
               <Col>
                 <Button
@@ -102,17 +80,44 @@ function MatchDetails(props) {
                   // auto
                   onPress={() =>
                     handleMatchClick(
-                      "m2",
-                      data.match2_team1_Id,
-                      data.match2_team2_Id
+                      "m1",
+                      data.match1_team1_Id,
+                      data.match1_team2_Id
                     )
                   }
                 >
-                  {data.match2_team1} vs {data.match2_team2}
+                  {data.match1_team1} vs {data.match1_team2}
                 </Button>
               </Col>
             </Row>
-          )}
+            <Spacer y={0.5} />
+            {data.match2_team1 && (
+              <>
+                <Row>
+                  <Col>
+                    <Text>Match - 2</Text>
+                  </Col>
+                  <Col>
+                    <Button
+                      disabled={data.date != today}
+                      size="sm"
+                      // auto
+                      onPress={() =>
+                        handleMatchClick(
+                          "m2",
+                          data.match2_team1_Id,
+                          data.match2_team2_Id
+                        )
+                      }
+                    >
+                      {data.match2_team1} vs {data.match2_team2}
+                    </Button>
+                  </Col>
+                </Row>
+                <Spacer y={0.5} />
+              </>
+            )}
+          </Card>
           <Spacer y={1} />
           {match1_posts && (
             <ul>
@@ -137,9 +142,15 @@ function MatchDetails(props) {
                             <Text color="success">{post.updatedTime}</Text>
                           </Col>
                           <Col>
-                            <Text color={post.p1.mvp && "error"}>{post.p1.name}</Text>
-                            <Text color={post.p2.mvp && "error"}>{post.p2.name}</Text>
-                            <Text color={post.p3.mvp && "error" }>{post.p3.name}</Text>
+                            <Text color={post.p1.mvp && "error"}>
+                              {post.p1.name}
+                            </Text>
+                            <Text color={post.p2.mvp && "error"}>
+                              {post.p2.name}
+                            </Text>
+                            <Text color={post.p3.mvp && "error"}>
+                              {post.p3.name}
+                            </Text>
                           </Col>
                         </Row>
                       </Card.Body>
@@ -149,7 +160,7 @@ function MatchDetails(props) {
             </ul>
           )}
 
-          <Spacer y={1} />
+          {/* <Spacer y={1} /> */}
 
           {match2_posts && (
             <ul>
@@ -169,14 +180,20 @@ function MatchDetails(props) {
                     >
                       <Card.Body>
                         <Row align="center">
-                        <Col>
+                          <Col>
                             <Text color="warning">{post.name}</Text>
                             <Text color="success">{post.updatedTime}</Text>
                           </Col>
                           <Col>
-                            <Text color={post.p1.mvp && "error"}>{post.p1.name}</Text>
-                            <Text color={post.p2.mvp && "error"}>{post.p2.name}</Text>
-                            <Text color={post.p3.mvp && "error"}>{post.p3.name}</Text>
+                            <Text color={post.p1.mvp && "error"}>
+                              {post.p1.name}
+                            </Text>
+                            <Text color={post.p2.mvp && "error"}>
+                              {post.p2.name}
+                            </Text>
+                            <Text color={post.p3.mvp && "error"}>
+                              {post.p3.name}
+                            </Text>
                           </Col>
                         </Row>
                       </Card.Body>
