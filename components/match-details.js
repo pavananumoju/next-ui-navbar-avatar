@@ -137,9 +137,9 @@ function MatchDetails(props) {
                             <Text color="success">{post.updatedTime}</Text>
                           </Col>
                           <Col>
-                            <Text>{post.p1.name}</Text>
-                            <Text>{post.p2.name}</Text>
-                            <Text>{post.p3.name}</Text>
+                            <Text color={post.p1.mvp && "error"}>{post.p1.name}</Text>
+                            <Text color={post.p2.mvp && "error"}>{post.p2.name}</Text>
+                            <Text color={post.p3.mvp && "error"}>{post.p3.name}</Text>
                           </Col>
                         </Row>
                       </Card.Body>
@@ -169,14 +169,14 @@ function MatchDetails(props) {
                     >
                       <Card.Body>
                         <Row align="center">
-                          <Col>
+                        <Col>
                             <Text color="warning">{post.name}</Text>
                             <Text color="success">{post.updatedTime}</Text>
                           </Col>
                           <Col>
-                            <Text>{post.p1.name}</Text>
-                            <Text>{post.p2.name}</Text>
-                            <Text>{post.p3.name}</Text>
+                            <Text color={post.p1.mvp && "error"}>{post.p1.name}</Text>
+                            <Text color={post.p2.mvp && "error"}>{post.p2.name}</Text>
+                            <Text color={post.p3.mvp && "error"}>{post.p3.name}</Text>
                           </Col>
                         </Row>
                       </Card.Body>

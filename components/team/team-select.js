@@ -138,6 +138,7 @@ function TeamSelect(props) {
     };
     const formattedDate = new Date().toLocaleDateString("en-US", options);
 
+    
     // console.log(formattedDate +' - '+ formattedTime);
 
     // console.log(selectedItems);
@@ -147,9 +148,9 @@ function TeamSelect(props) {
       match: match,
       email: email,
       name: user.displayName,
-      p1: { id: selectedItems[0].id, name: selectedItems[0].name, mvp: true },
-      p2: { id: selectedItems[1].id, name: selectedItems[1].name, mvp: false },
-      p3: { id: selectedItems[2].id, name: selectedItems[2].name, mvp: false },
+      p1: { id: selectedItems[0].id, name: selectedItems[0].name, mvp: checked === selectedItems[0].id ? true : false },
+      p2: { id: selectedItems[1].id, name: selectedItems[1].name, mvp: checked === selectedItems[1].id ? true : false },
+      p3: { id: selectedItems[2].id, name: selectedItems[2].name, mvp: checked === selectedItems[2].id ? true : false },
       updatedDate: formattedDate,
       updatedTime: formattedTime,
     };
@@ -180,7 +181,7 @@ function TeamSelect(props) {
             return (
               <Row css={{ margin: 5, textAlign: "center" }}>
                 <Col>
-                  <Radio value={item.name} key={item.id} color={colorclass}>
+                  <Radio value={item.id} key={item.id} color={colorclass}>
                     <Text color={colorclass}>{item.name}</Text>
                   </Radio>
                 </Col>
