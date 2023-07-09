@@ -139,7 +139,7 @@ function MatchDetails(props) {
                           <Col>
                             <Text color={post.p1.mvp && "error"}>{post.p1.name}</Text>
                             <Text color={post.p2.mvp && "error"}>{post.p2.name}</Text>
-                            <Text color={post.p3.mvp && "error"}>{post.p3.name}</Text>
+                            <Text color={post.p3.mvp && "error" }>{post.p3.name}</Text>
                           </Col>
                         </Row>
                       </Card.Body>
