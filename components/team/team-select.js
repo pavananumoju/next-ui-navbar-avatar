@@ -192,7 +192,7 @@ function TeamSelect(props) {
                   <Radio
                     value={item.id}
                     color={colorclass}
-                    css={{ alignItems: "center" }}
+                    // css={{ alignItems: "center" }}
                   >
                     <Text color={colorclass}>{item.name}</Text>
                   </Radio>
