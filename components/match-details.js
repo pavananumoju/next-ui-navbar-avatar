@@ -1,4 +1,13 @@
-import { Spacer, Col, Card, Grid, Text, Button, Row } from "@nextui-org/react";
+import {
+  Spacer,
+  Col,
+  Card,
+  Grid,
+  Text,
+  Button,
+  Row,
+  Container,
+} from "@nextui-org/react";
 import { useRouter } from "next/router";
 
 function MatchDetails(props) {
@@ -6,7 +15,6 @@ function MatchDetails(props) {
 
   const { matchData } = props;
   const { match1_posts, match2_posts } = props.userPosts;
-  // console.log(match1_posts)
 
   const mdm = matchData.matchDetailsMap;
   // console.log(mdm);
@@ -41,6 +49,16 @@ function MatchDetails(props) {
     );
   }
 
+  var today = new Date().toLocaleDateString("en-GB", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+    weekday: "short",
+  });
+
+  //mocking date for development
+  today = "Sun, 02 Apr 2023";
+
   return (
     <>
       {data && (
@@ -56,6 +74,7 @@ function MatchDetails(props) {
             </Col>
             <Col>
               <Button
+                disabled={data.date != today}
                 size="sm"
                 // auto
                 onPress={() =>
@@ -78,6 +97,7 @@ function MatchDetails(props) {
               </Col>
               <Col>
                 <Button
+                  disabled={data.date != today}
                   size="sm"
                   // auto
                   onPress={() =>
@@ -99,7 +119,11 @@ function MatchDetails(props) {
               <Text>Match 1</Text>
               {match1_posts &&
                 match1_posts.map((post) => (
-                  <Grid.Container gap={1} key={post.p1.name}>
+                  <Grid.Container
+                    gap={1}
+                    key={`${post.email} + ${post.p1.id}`}
+                    sm="12"
+                  >
                     <Card
                       isPressable
                       isHoverable
@@ -108,8 +132,9 @@ function MatchDetails(props) {
                     >
                       <Card.Body>
                         <Row align="center">
-                          <Col css={{ display: "flex" }}>
-                            <Text color="warning">{post.email}</Text>
+                          <Col>
+                            <Text color="warning">{post.name}</Text>
+                            <Text color="success">{post.updatedTime}</Text>
                           </Col>
                           <Col>
                             <Text>{post.p1.name}</Text>
@@ -131,7 +156,11 @@ function MatchDetails(props) {
               <Text>Match 2</Text>
               {match2_posts &&
                 match2_posts.map((post) => (
-                  <Grid.Container gap={1} key={post.p1.name}>
+                  <Grid.Container
+                    gap={1}
+                    key={`${post.email} + ${post.p1.id}`}
+                    sm="12"
+                  >
                     <Card
                       isPressable
                       isHoverable
@@ -140,8 +169,9 @@ function MatchDetails(props) {
                     >
                       <Card.Body>
                         <Row align="center">
-                          <Col css={{ display: "flex" }}>
-                            <Text color="warning">{post.email}</Text>
+                          <Col>
+                            <Text color="warning">{post.name}</Text>
+                            <Text color="success">{post.updatedTime}</Text>
                           </Col>
                           <Col>
                             <Text>{post.p1.name}</Text>

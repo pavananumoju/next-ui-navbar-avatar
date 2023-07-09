@@ -11,13 +11,17 @@ import {
   Spacer,
   Container,
   Text,
-  User,
+  Row,
+  Col,
+  Radio,
   Image,
   Loading,
 } from "@nextui-org/react";
+import { useRouter } from "next/router";
 
 function TeamSelect(props) {
   const { user } = useAuth();
+  const router = useRouter();
 
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -39,6 +43,7 @@ function TeamSelect(props) {
   const [displayMsg, setDisplayMsg] = useState();
   const [team1SName, setTeam1SName] = useState();
   const [team2SName, setTeam2SName] = useState();
+  const [checked, setChecked] = useState("");
 
   useEffect(() => {
     if (team1 != undefined && team2 != undefined) {
@@ -98,6 +103,7 @@ function TeamSelect(props) {
     setSelectedItems(
       selectedItems.filter((selectedItem) => selectedItem.id !== itemId)
     );
+    setChecked("");
   }
 
   const countItemsFromList = (selectedItems, listName) => {
@@ -117,23 +123,43 @@ function TeamSelect(props) {
 
   function handleUserTeamSubmission() {
     setIsLoading(true);
-    
-    
-    console.log(selectedItems);
+
+    var options = {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+    const formattedTime = new Date().toLocaleTimeString("en-US", options);
+
+    options = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    };
+    const formattedDate = new Date().toLocaleDateString("en-US", options);
+
+    // console.log(formattedDate +' - '+ formattedTime);
+
+    // console.log(selectedItems);
     const docRef = getDocRef(`Posts/${date}/${match}`, user.email);
     const email = user.email;
     const team = {
       match: match,
       email: email,
+      name: user.displayName,
       p1: { id: selectedItems[0].id, name: selectedItems[0].name, mvp: true },
       p2: { id: selectedItems[1].id, name: selectedItems[1].name, mvp: false },
       p3: { id: selectedItems[2].id, name: selectedItems[2].name, mvp: false },
+      updatedDate: formattedDate,
+      updatedTime: formattedTime,
     };
 
     setDocToDB(docRef, team).then((x) => {
       setDisplayMsg("Submit success");
       setIsLoading(false);
     });
+
+    router.push("/todays");
   }
 
   return (
@@ -142,16 +168,34 @@ function TeamSelect(props) {
         {match === "m1" ? "Match 1" : "Match 2"}
       </Text>
       <ul>
-        {selectedItems.map((item) => {
-          let colorclass = "";
-          const l1 = list1.filter((e) => e.id === item.id);
-          const l2 = list2.filter((e) => e.id === item.id);
-          if (!l1.length) colorclass = "secondary";
-          if (!l2.length) colorclass = "primary";
+        <Radio.Group label="Options" onChange={setChecked}>
+          {selectedItems.map((item) => {
+            let colorclass = "";
+            const l1 = list1.filter((e) => e.id === item.id);
+            const l2 = list2.filter((e) => e.id === item.id);
+            if (!l1.length) colorclass = "secondary";
+            if (!l2.length) colorclass = "primary";
 
-          // console.log(item.id, colorclass);
-          return (
-            <Button
+            // console.log(item.id, colorclass);
+            return (
+              <Row css={{ margin: 5, textAlign: "center" }}>
+                <Col>
+                  <Radio value={item.name} key={item.id} color={colorclass}>
+                    <Text color={colorclass}>{item.name}</Text>
+                  </Radio>
+                </Col>
+                <Col>
+                  <Button
+                    size={"xs"}
+                    color={colorclass}
+                    // key={item.id}
+                    onPress={() => handleSelectedItemClick(item.id)}
+                  >
+                    Remove
+                  </Button>
+                </Col>
+
+                {/* <Button
               ghost
               key={item.id}
               size="sm"
@@ -160,9 +204,11 @@ function TeamSelect(props) {
               onPress={() => handleSelectedItemClick(item.id)}
             >
               {item.name}
-            </Button>
-          );
-        })}
+            </Button> */}
+              </Row>
+            );
+          })}
+        </Radio.Group>
       </ul>
 
       {isAtLeastOneFromEachList ? (
@@ -182,7 +228,13 @@ function TeamSelect(props) {
       ) : (
         <>
           <Spacer y={2} />
-          <Button color="warning" ghost onClick={handleUserTeamSubmission}>
+
+          <Button
+            color="warning"
+            ghost
+            onClick={handleUserTeamSubmission}
+            disabled={!checked}
+          >
             Submit
           </Button>
         </>
