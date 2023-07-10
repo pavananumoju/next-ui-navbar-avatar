@@ -245,7 +245,7 @@ function TeamSelect(props) {
           </Text>
           <Button
             onClick={() => {
-              router.push("/todays");
+              router.push("/matches/todays");
             }}
             size={"xs"}
             color={"success"}
