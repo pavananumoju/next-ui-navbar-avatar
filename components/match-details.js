@@ -9,10 +9,12 @@ import {
   Container,
 } from "@nextui-org/react";
 import { useRouter } from "next/router";
+import { useAuth } from "@/context/auth-context";
 
 function MatchDetails(props) {
   const router = useRouter();
-
+  const { user } = useAuth();
+  let bdColor = "gray";
   const { matchData } = props;
   const { match1_posts, match2_posts } = props.userPosts;
 
@@ -64,7 +66,7 @@ function MatchDetails(props) {
       {data && (
         <>
           <Card>
-          <Spacer y={0.5} />
+            <Spacer y={0.5} />
             <Text size={15} b color="#ff4ecd">
               {data.date}
             </Text>
@@ -133,22 +135,25 @@ function MatchDetails(props) {
                       isPressable
                       isHoverable
                       variant="bordered"
-                      css={{ mw: "600px" }}
+                      css={{
+                        mw: "600px",
+                        borderColor: user.email === post.email ? "orange" : ""
+                      }}
                     >
                       <Card.Body>
                         <Row align="center">
                           <Col>
-                            <Text color="warning">{post.name}</Text>
-                            <Text color="success">{post.updatedTime}</Text>
+                          <Text color={user.email === post.email ? 'warning':'primary'}>{user.email === post.email ? 'Your team':post.name}</Text>
+                            <Text color="secondary">{post.updatedTime}</Text>
                           </Col>
                           <Col>
-                            <Text color={post.p1.mvp && "error"}>
+                            <Text color={post.p1.mvp && "success"}>
                               {post.p1.name}
                             </Text>
-                            <Text color={post.p2.mvp && "error"}>
+                            <Text color={post.p2.mvp && "success"}>
                               {post.p2.name}
                             </Text>
-                            <Text color={post.p3.mvp && "error"}>
+                            <Text color={post.p3.mvp && "success"}>
                               {post.p3.name}
                             </Text>
                           </Col>
@@ -176,22 +181,22 @@ function MatchDetails(props) {
                       isPressable
                       isHoverable
                       variant="bordered"
-                      css={{ mw: "600px" }}
+                      css={{ mw: "600px",borderColor: user.email === post.email ? "orange" : "" }}
                     >
                       <Card.Body>
                         <Row align="center">
                           <Col>
-                            <Text color="warning">{post.name}</Text>
-                            <Text color="success">{post.updatedTime}</Text>
+                          <Text color={user.email === post.email ? 'warning':'primary'}>{user.email === post.email ? 'Your team':post.name}</Text>
+                            <Text color="secondary">{post.updatedTime}</Text>
                           </Col>
                           <Col>
-                            <Text color={post.p1.mvp && "error"}>
+                            <Text color={post.p1.mvp && "success"}>
                               {post.p1.name}
                             </Text>
-                            <Text color={post.p2.mvp && "error"}>
+                            <Text color={post.p2.mvp && "success"}>
                               {post.p2.name}
                             </Text>
-                            <Text color={post.p3.mvp && "error"}>
+                            <Text color={post.p3.mvp && "success"}>
                               {post.p3.name}
                             </Text>
                           </Col>
