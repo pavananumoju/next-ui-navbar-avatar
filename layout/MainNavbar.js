@@ -64,14 +64,14 @@ function MainNavbar() {
           <>
             <Navbar.Link
               onClick={() => {
-                router.push("/fixtures");
+                router.push("/matches/fixtures");
               }}
             >
               Fixtures
             </Navbar.Link>
             <Navbar.Link
               onClick={() => {
-                router.push("/todays");
+                router.push("/matches/todays");
               }}
             >
               Todays
@@ -127,7 +127,7 @@ function MainNavbar() {
                   router.push("/rules");
                 }
                 if (actionKey === "loaddata") {
-                  router.push("/loaddata");
+                  router.push("/function/loaddata");
                 }
               }}
             >

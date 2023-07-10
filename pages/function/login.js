@@ -83,7 +83,7 @@ function Login() {
             auto
             // color={"primary"}
             onPress={() => {
-              router.push("/signup");
+              router.push("/function/signup");
             }}
           >
             Signup
