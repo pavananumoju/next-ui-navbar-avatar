@@ -14,7 +14,7 @@ import { useAuth } from "@/context/auth-context";
 function MatchDetails(props) {
   const router = useRouter();
   const { user } = useAuth();
-  let bdColor = "gray";
+  // let bdColor = "gray";
   const { matchData } = props;
   const { match1_posts, match2_posts } = props.userPosts;
 
@@ -65,7 +65,10 @@ function MatchDetails(props) {
     <>
       {data && (
         <>
-          <Card>
+          <Card
+            // css={{ borderColor: data.date === today ? "yellow" : "" }}
+            // variant="bordered"
+          >
             <Spacer y={0.5} />
             <Text size={15} b color="#ff4ecd">
               {data.date}
@@ -123,7 +126,8 @@ function MatchDetails(props) {
           <Spacer y={1} />
           {match1_posts && (
             <ul>
-              <Text>Match 1</Text>
+              <Text color="warning">Match 1</Text>
+              {/* <Spacer x={0.5}/> */}
               {match1_posts &&
                 match1_posts.map((post) => (
                   <Grid.Container
@@ -137,14 +141,25 @@ function MatchDetails(props) {
                       variant="bordered"
                       css={{
                         mw: "600px",
-                        borderColor: user.email === post.email ? "orange" : ""
+                        borderColor: user.email === post.email ? "orange" : "",
+                        // backgroundColor:"black"
                       }}
                     >
                       <Card.Body>
                         <Row align="center">
                           <Col>
-                          <Text color={user.email === post.email ? 'warning':'primary'}>{user.email === post.email ? 'Your team':post.name}</Text>
-                            <Text color="secondary">{post.updatedTime}</Text>
+                            <Text
+                              color={
+                                user.email === post.email
+                                  ? "warning"
+                                  : "primary"
+                              }
+                            >
+                              {user.email === post.email
+                                ? "Your team"
+                                : post.name}
+                            </Text>
+                            <Text color="primary">{post.updatedTime}</Text>
                           </Col>
                           <Col>
                             <Text color={post.p1.mvp && "success"}>
@@ -165,11 +180,11 @@ function MatchDetails(props) {
             </ul>
           )}
 
-          {/* <Spacer y={1} /> */}
+          <Spacer y={1} />
 
           {match2_posts && (
             <ul>
-              <Text>Match 2</Text>
+              <Text color="warning">Match 2</Text>
               {match2_posts &&
                 match2_posts.map((post) => (
                   <Grid.Container
@@ -181,12 +196,26 @@ function MatchDetails(props) {
                       isPressable
                       isHoverable
                       variant="bordered"
-                      css={{ mw: "600px",borderColor: user.email === post.email ? "orange" : "" }}
+                      css={{
+                        mw: "600px",
+                        borderColor: user.email === post.email ? "orange" : "",
+                        // backgroundColor:"black"
+                      }}
                     >
                       <Card.Body>
                         <Row align="center">
                           <Col>
-                          <Text color={user.email === post.email ? 'warning':'primary'}>{user.email === post.email ? 'Your team':post.name}</Text>
+                            <Text
+                              color={
+                                user.email === post.email
+                                  ? "warning"
+                                  : "secondary"
+                              }
+                            >
+                              {user.email === post.email
+                                ? "Your team"
+                                : post.name}
+                            </Text>
                             <Text color="secondary">{post.updatedTime}</Text>
                           </Col>
                           <Col>
