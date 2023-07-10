@@ -1,4 +1,4 @@
-import { Spacer, Col, Card, Grid, Text, Button, Row } from "@nextui-org/react";
+import { Col, Card, Grid, Text, Row } from "@nextui-org/react";
 
 function TeamPostCard(props) {
 
