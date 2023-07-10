@@ -66,6 +66,8 @@ function MatchDetails(props) {
       {data && (
         <>
           <Card
+          isPressable
+          isHoverable
             // css={{ borderColor: data.date === today ? "yellow" : "" }}
             // variant="bordered"
           >
