@@ -3,9 +3,7 @@ import { getDocFromDB } from "@/components/utils/firebase-db-utils";
 import MatchDetails from "@/components/match-details";
 
 function Fixtures(props) {
-  // console.log(props.fixtures);
   const { fixtures } = props;
-  // console.log(fixtures);
   return (
     <Container justify="center" align="center">
       <Spacer y={2} />

@@ -8,6 +8,7 @@ import {
   getDate_dd_month_yyyy,
   getDate_wwwddmmyyyy,
 } from "@/components/utils/date-utils";
+import { todaysMatchDate } from "@/components/utils/mock-utils";
 
 function Todays(props) {
   const { fixtures, posts } = props;
@@ -24,7 +25,7 @@ function Todays(props) {
 
 export async function getServerSideProps() {
   //mock date
-  const date = new Date(2023, 3, 2);
+  const date = todaysMatchDate;
 
   const date_wwwddmmyyyy = getDate_wwwddmmyyyy(date);
 
