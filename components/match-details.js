@@ -138,7 +138,7 @@ function MatchDetails(props) {
                     <Card
                       isPressable
                       isHoverable
-                      variant="bordered"
+                      // variant="bordered"
                       css={{
                         mw: "600px",
                         borderColor: user.email === post.email ? "orange" : "",
@@ -195,7 +195,7 @@ function MatchDetails(props) {
                     <Card
                       isPressable
                       isHoverable
-                      variant="bordered"
+                      // variant="bordered"
                       css={{
                         mw: "600px",
                         borderColor: user.email === post.email ? "orange" : "",
