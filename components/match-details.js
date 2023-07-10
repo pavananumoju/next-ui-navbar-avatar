@@ -10,6 +10,7 @@ import {
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/auth-context";
 import { getDate_dd_month_yyyy, getDate_wwwddmmyyyy } from "./utils/date-utils";
+import { currentMatchDay } from "./utils/mock-utils";
 
 function MatchDetails(props) {
   const router = useRouter();
@@ -46,7 +47,7 @@ function MatchDetails(props) {
   var today = getDate_wwwddmmyyyy(new Date());
 
   //mock date for development
-  today = "Sun, 02 Apr 2023";
+  today = currentMatchDay;
 
   return (
     <>
@@ -127,10 +128,10 @@ function MatchDetails(props) {
                     <Card
                       isPressable
                       isHoverable
-                      // variant="bordered"
+                      variant="bordered"
                       css={{
                         mw: "600px",
-                        borderColor: user.email === post.email ? "orange" : "",
+                        borderColor: "blue  ",
                         // backgroundColor:"black"
                       }}
                     >
@@ -141,14 +142,14 @@ function MatchDetails(props) {
                               color={
                                 user.email === post.email
                                   ? "warning"
-                                  : "primary"
+                                  : ""
                               }
                             >
                               {user.email === post.email
                                 ? "Your team"
                                 : post.name}
                             </Text>
-                            <Text color="primary">{post.updatedTime}</Text>
+                            <Text >{post.updatedTime}</Text>
                           </Col>
                           <Col>
                             <Text color={post.p1.mvp && "success"}>
@@ -184,10 +185,10 @@ function MatchDetails(props) {
                     <Card
                       isPressable
                       isHoverable
-                      // variant="bordered"
+                      variant="bordered"
                       css={{
                         mw: "600px",
-                        borderColor: user.email === post.email ? "orange" : "",
+                        borderColor: "violet",
                         // backgroundColor:"black"
                       }}
                     >
@@ -198,17 +199,17 @@ function MatchDetails(props) {
                               color={
                                 user.email === post.email
                                   ? "warning"
-                                  : "secondary"
+                                  : ""
                               }
                             >
                               {user.email === post.email
                                 ? "Your team"
                                 : post.name}
                             </Text>
-                            <Text color="secondary">{post.updatedTime}</Text>
+                            <Text>{post.updatedTime}</Text>
                           </Col>
                           <Col>
-                            <Text color={post.p1.mvp && "success"}>
+                          <Text color={post.p1.mvp && "success"}>
                               {post.p1.name}
                             </Text>
                             <Text color={post.p2.mvp && "success"}>
