@@ -46,30 +46,34 @@ function TeamSelect(props) {
           setTeam1SName(data.team1SName);
           setTeam2SName(data.team2SName);
 
-          const selectedArr = [
-            {
-              id: data.selectedTeamData.p1.id,
-              name: data.selectedTeamData.p1.name,
-              mvp: data.selectedTeamData.p1.mvp
-                ? setChecked(data.selectedTeamData.p1.id)
-                : "",
-            },
-            {
-              id: data.selectedTeamData.p2.id,
-              name: data.selectedTeamData.p2.name,
-              mvp: data.selectedTeamData.p2.mvp
-                ? setChecked(data.selectedTeamData.p2.id)
-                : "",
-            },
-            {
-              id: data.selectedTeamData.p3.id,
-              name: data.selectedTeamData.p3.name,
-              mvp: data.selectedTeamData.p3.mvp
-                ? setChecked(data.selectedTeamData.p3.id)
-                : "",
-            },
-          ];
-          setSelectedItems(selectedArr);
+          var selectedArr = [];
+          if (data.selectedTeamData) {
+            selectedArr = [
+              {
+                id: data.selectedTeamData.p1.id,
+                name: data.selectedTeamData.p1.name,
+                mvp: data.selectedTeamData.p1.mvp
+                  ? setChecked(data.selectedTeamData.p1.id)
+                  : "",
+              },
+              {
+                id: data.selectedTeamData.p2.id,
+                name: data.selectedTeamData.p2.name,
+                mvp: data.selectedTeamData.p2.mvp
+                  ? setChecked(data.selectedTeamData.p2.id)
+                  : "",
+              },
+              {
+                id: data.selectedTeamData.p3.id,
+                name: data.selectedTeamData.p3.name,
+                mvp: data.selectedTeamData.p3.mvp
+                  ? setChecked(data.selectedTeamData.p3.id)
+                  : "",
+              },
+            ];
+            setSelectedItems(selectedArr);
+          }
+
           return;
         }
       );

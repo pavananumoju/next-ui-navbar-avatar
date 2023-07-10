@@ -40,7 +40,7 @@ function MatchDetails(props) {
     const dateObj = new Date(data.date);
     const date_dd_month_yyyy = getDate_dd_month_yyyy(dateObj);
     router.push(
-      `/select-demo/?date=${date_dd_month_yyyy}&match=${match}&team1=${team1_id}&team2=${team2_id}`
+      `/team-selection-page/?date=${date_dd_month_yyyy}&match=${match}&team1=${team1_id}&team2=${team2_id}`
     );
   }
 
