@@ -6,10 +6,10 @@ import {
   Text,
   Button,
   Row,
-  Container,
 } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/auth-context";
+import { getDate_dd_month_yyyy, getDate_wwwddmmyyyy } from "./utils/date-utils";
 
 function MatchDetails(props) {
   const router = useRouter();
@@ -34,31 +34,18 @@ function MatchDetails(props) {
           match2_team2: mdm.match[1] && mdm.match[1].matchInfo.team2.teamSName,
         }
       : null;
-  // console.log(data);
 
   function handleMatchClick(match, team1_id, team2_id) {
-    // console.log(team1_id, team2_id);
     const dateObj = new Date(data.date);
-    const formattedDate = dateObj
-      .toLocaleDateString("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit",
-      })
-      .replace(/ /g, "_");
+    const date_dd_month_yyyy = getDate_dd_month_yyyy(dateObj);
     router.push(
-      `/select-demo/?date=${formattedDate}&match=${match}&team1=${team1_id}&team2=${team2_id}`
+      `/select-demo/?date=${date_dd_month_yyyy}&match=${match}&team1=${team1_id}&team2=${team2_id}`
     );
   }
 
-  var today = new Date().toLocaleDateString("en-GB", {
-    year: "numeric",
-    month: "short",
-    day: "2-digit",
-    weekday: "short",
-  });
+  var today = getDate_wwwddmmyyyy(new Date());
 
-  //mocking date for development
+  //mock date for development
   today = "Sun, 02 Apr 2023";
 
   return (

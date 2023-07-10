@@ -15,10 +15,10 @@ import {
   Row,
   Col,
   Radio,
-  Image,
   Loading,
 } from "@nextui-org/react";
 import { useRouter } from "next/router";
+import { getDate_dd_mm_yyyy, getTime_hhmmssaa } from "../utils/date-utils";
 
 function TeamSelect(props) {
   const { user } = useAuth();
@@ -27,16 +27,6 @@ function TeamSelect(props) {
   const [selectedItems, setSelectedItems] = useState([]);
 
   const { date, match, team1, team2 } = props.teamProps;
-  // const dt = new Date(date);
-
-  // console.log(date, match, team1, team2);
-
-  // const formattedDate = dt.toLocaleDateString("en-GB", {
-  //   year: "numeric",
-  //   month: "long",
-  //   day: "2-digit",
-  // });
-  // console.log("submitting user team for " + formattedDate);
 
   const [list1, setList1] = useState();
   const [list2, setList2] = useState();
@@ -49,13 +39,40 @@ function TeamSelect(props) {
 
   useEffect(() => {
     if (team1 != undefined && team2 != undefined) {
-      const test = getSquadsForTeams(team1, team2).then((data) => {
-        setList1(data.list1);
-        setList2(data.list2);
-        setTeam1SName(data.team1SName);
-        setTeam2SName(data.team2SName);
-        return;
-      });
+      const test = getSquadsForTeams(team1, team2, user, match, date).then(
+        (data) => {
+          setList1(data.list1);
+          setList2(data.list2);
+          setTeam1SName(data.team1SName);
+          setTeam2SName(data.team2SName);
+
+          const selectedArr = [
+            {
+              id: data.selectedTeamData.p1.id,
+              name: data.selectedTeamData.p1.name,
+              mvp: data.selectedTeamData.p1.mvp
+                ? setChecked(data.selectedTeamData.p1.id)
+                : "",
+            },
+            {
+              id: data.selectedTeamData.p2.id,
+              name: data.selectedTeamData.p2.name,
+              mvp: data.selectedTeamData.p2.mvp
+                ? setChecked(data.selectedTeamData.p2.id)
+                : "",
+            },
+            {
+              id: data.selectedTeamData.p3.id,
+              name: data.selectedTeamData.p3.name,
+              mvp: data.selectedTeamData.p3.mvp
+                ? setChecked(data.selectedTeamData.p3.id)
+                : "",
+            },
+          ];
+          setSelectedItems(selectedArr);
+          return;
+        }
+      );
     }
   }, []);
 
@@ -126,20 +143,9 @@ function TeamSelect(props) {
   function handleUserTeamSubmission() {
     setIsLoading(true);
 
-    var options = {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    };
-    const formattedTime = new Date().toLocaleTimeString("en-US", options);
+    const formattedTime = getTime_hhmmssaa(new Date());
 
-    options = {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    };
-    const formattedDate = new Date().toLocaleDateString("en-US", options);
-
+    const formattedDate = getDate_dd_mm_yyyy(new Date());
     const docRef = getDocRef(`Posts/${date}/${match}`, user.email);
     const email = user.email;
     const team = {
@@ -165,12 +171,13 @@ function TeamSelect(props) {
       updatedTime: formattedTime,
     };
 
+    console.log(selectedItems);
+
     setDocToDB(docRef, team).then((x) => {
       setDisplayMsg("Submit success");
       setIsLoading(false);
       setDisableSelection(true);
     });
-    // router.push("/todays");
   }
 
   return (
@@ -277,23 +284,12 @@ function TeamSelect(props) {
                   css={{ margin: 10, height: "auto" }}
                   onPress={() => handleItemClick("list1", item.id)}
                 >
-                  {/* <Image
-                    showSkeleton
-                    width={25}
-                    height={25}
-                    src={`https://i.cricketcb.com/stats/img/faceImages/${item.id}.jpg`}
-                    alt="Default Image"
-                    // objectFit="cover"
-                  />
-                  <Spacer x={0.5} />
-                  {item.name} */}
                   <User
                     key={item.id}
                     bordered
                     color="primary"
                     // css={{ margin: 2 }}
                     size="lg"
-                    // onClick={() => handleItemClick("list1", item.id)}
                     src={`https://i.cricketcb.com/stats/img/faceImages/${item.id}.jpg`}
                     name={item.name}
                     description={item.role}
@@ -311,9 +307,6 @@ function TeamSelect(props) {
             {list2.map((item) => (
               <li key={item.id}>
                 <Button
-                  // ghost
-                  // align="left"
-                  // shadow
                   light
                   color="secondary"
                   // bordered
@@ -323,24 +316,12 @@ function TeamSelect(props) {
                   onPress={() => handleItemClick("list2", item.id)}
                   // className={isItemSelected(item.id) ? "selected" : ""}
                 >
-                  {/* <Image
-                    showSkeleton
-                    width={25}
-                    height={25}
-                    src={`https://i.cricketcb.com/stats/img/faceImages/${item.id}.jpg`}
-                    alt="Default Image"
-                    // objectFit="cover"
-                  />
-                  <Spacer x={0.5} />
-                  {item.name} */}
                   <User
                     // css={{"padding-top":100, "padding-bottom":50 }}
                     key={item.id}
                     bordered
                     color="secondary"
-                    // css={{ margin: 2 }}
                     size="lg"
-                    // onClick={() => handleItemClick("list2", item.id)}
                     src={`https://i.cricketcb.com/stats/img/faceImages/${item.id}.jpg`}
                     name={item.name}
                     description={item.role}
@@ -355,7 +336,7 @@ function TeamSelect(props) {
   );
 }
 
-async function getSquadsForTeams(team1, team2) {
+async function getSquadsForTeams(team1, team2, user, match, date) {
   const team1SquadId = (await getDocFromDB("Teams", team1.toString())).data()
     .squadId;
 
@@ -376,11 +357,11 @@ async function getSquadsForTeams(team1, team2) {
     .data()
     .player.filter((row) => !row.isHeader);
 
-  team1SName != undefined &&
-    team2SName != undefined &&
-    console.log(team1SName, team2SName);
+  const selectedTeamData = (
+    await getDocFromDB(`/Posts/${date}/${match}`, user.email)
+  ).data();
 
-  return { team1SName, list1, team2SName, list2 };
+  return { team1SName, list1, team2SName, list2, selectedTeamData };
 }
 
 export default TeamSelect;

@@ -2,9 +2,12 @@ import { Container, Spacer, Text } from "@nextui-org/react";
 import {
   getDocFromDB,
   getDocsFromDB,
-  getDocsWithQuery,
 } from "@/components/utils/firebase-db-utils";
 import MatchDetails from "@/components/match-details";
+import {
+  getDate_dd_month_yyyy,
+  getDate_wwwddmmyyyy,
+} from "@/components/utils/date-utils";
 
 function Todays(props) {
   const { fixtures, posts } = props;
@@ -20,37 +23,28 @@ function Todays(props) {
 }
 
 export async function getServerSideProps() {
+  //mock date
   const date = new Date(2023, 3, 2);
-  const formattedDate = date.toLocaleDateString("en-GB", {
-    year: "numeric",
-    month: "short",
-    day: "2-digit",
-    weekday: "short",
-  });
-  //   console.log(formattedDate);
+
+  const date_wwwddmmyyyy = getDate_wwwddmmyyyy(date);
+
   const docSnap = await getDocFromDB("Fixtures", "2023");
   const allMatchesDetails = docSnap.data().matchDetails;
   const matchDetails = allMatchesDetails.filter((matchData) => {
     {
       return (
         matchData.matchDetailsMap &&
-        matchData.matchDetailsMap.key === formattedDate
+        matchData.matchDetailsMap.key === date_wwwddmmyyyy
       );
     }
   });
 
-  const formattedDate1 = date
-    .toLocaleDateString("en-GB", {
-      year: "numeric",
-      month: "long",
-      day: "2-digit",
-    })
-    .replace(/ /g, "_");
+  const date_dd_month_yyyy = getDate_dd_month_yyyy(date);
 
   const match1_posts = [];
   const match2_posts = [];
-  const querySnapshot1 = await getDocsFromDB("/Posts/02_April_2023/m1");
-  const querySnapshot2 = await getDocsFromDB("/Posts/02_April_2023/m2");
+  const querySnapshot1 = await getDocsFromDB(`/Posts/${date_dd_month_yyyy}/m1`);
+  const querySnapshot2 = await getDocsFromDB(`/Posts/${date_dd_month_yyyy}/m2`);
 
   querySnapshot1.forEach((doc) => {
     match1_posts.push(doc.data());
