@@ -16,7 +16,7 @@ export default function App() {
         auto
         // color={"primary"}
         onClick={() => {
-          router.push("/login");
+          router.push("/function/login");
         }}
       >
         Login

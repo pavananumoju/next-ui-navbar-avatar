@@ -50,6 +50,7 @@ function MainNavbar() {
           // squared
           size="md"
           src="/icons/CB.png"
+          onClick={() => router.push("/dashboard")}
         />
         <Text b color="inherit" hideIn="xs">
           CRICBUDZ
@@ -160,9 +161,9 @@ function MainNavbar() {
                 <Dropdown.Item key="rules">Rules</Dropdown.Item>
               ) : null}
 
-              {user.uid ? (
+              {user.isAdmin && (
                 <Dropdown.Item key="loaddata">LoadData</Dropdown.Item>
-              ) : null}
+              )}
 
               <Dropdown.Item key="help_and_feedback" withDivider>
                 Help & Feedback

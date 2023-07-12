@@ -35,7 +35,8 @@ export const AuthContextProvider = (props) => {
               email: dbUserData.email,
               uid: dbUserData.uid,
               displayName: dbUserData.displayName,
-              isTnCAccepted: dbUserData.isTnCAccepted
+              isTnCAccepted: dbUserData.isTnCAccepted,
+              isAdmin: dbUserData.isAdmin
             });
             setLoading(false);
             // console.log('tnc:'+dbUserData.isTnCAccepted);
@@ -55,7 +56,7 @@ export const AuthContextProvider = (props) => {
         // });
       } else {
         setUser({ email: null, uid: null });
-        router.push("/login");
+        router.push("/function/login");
       }
     });
     setLoading(false);
@@ -69,7 +70,7 @@ export const AuthContextProvider = (props) => {
         // Signed in
         const updateUser = userCredential.user;
         setUser({ email: null, uid: null });
-        router.push("/login");
+        router.push("/function/login");
 
         updateProfile(auth.currentUser, {
           displayName: name,
@@ -88,6 +89,7 @@ export const AuthContextProvider = (props) => {
                   displayName: updateUser.displayName,
                   isTnCAccepted: false,
                   isUserApproved: false,
+                  isAdmin: false,
                 };
                 const docRef = getDocRef("Users", updateUser.email);
                 setDocToDB(docRef, data).then((data) => {
@@ -127,7 +129,8 @@ export const AuthContextProvider = (props) => {
               email: dbUserData.email,
               uid: dbUserData.uid,
               displayName: dbUserData.displayName,
-              isTnCAccepted: dbUserData.isTnCAccepted
+              isTnCAccepted: dbUserData.isTnCAccepted,
+              isAdmin: dbUserData.isAdmin
             });
             setLoading(false);
           })

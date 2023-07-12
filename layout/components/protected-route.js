@@ -9,7 +9,7 @@ function ProtectedRoute(props) {
   useEffect(() => {
     if (!user.uid) {
       console.log('no user uid, routing to login page');
-      router.push("/login");
+      router.push("/function/login");
     }
   }, [router, user]);
   
