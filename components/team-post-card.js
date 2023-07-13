@@ -83,27 +83,25 @@ function TeamPostCard(props) {
                     <Grid xs={4}>
                       <Col></Col>
                     </Grid>
-                    <Grid xs={7}>
-                      <Col
-                        css={{
-                          color: "yellow",
-                          fontWeight: "bold",
-                          background: "$blue200",
-                        }}
-                      >
-                        Total:
-                      </Col>
+                    <Grid
+                      xs={7}
+                      css={{
+                        color: "yellow",
+                        fontWeight: "bold",
+                        background: "$blue200",
+                      }}
+                    >
+                      <Col>Total:</Col>
                     </Grid>
-                    <Grid xs={1}>
-                      <Col
-                        css={{
-                          color: "yellow",
-                          fontWeight: "bold",
-                          background: "$blue200",
-                        }}
-                      >
-                        {p1_Points + p2_Points + p3_Points}
-                      </Col>
+                    <Grid
+                      xs={1}
+                      css={{
+                        color: "yellow",
+                        fontWeight: "bold",
+                        background: "$blue200",
+                      }}
+                    >
+                      <Col>{p1_Points + p2_Points + p3_Points}</Col>
                     </Grid>
                   </Grid.Container>
                 </Row>
