@@ -1,6 +1,6 @@
 import { Container, Spacer, Text, Row, Col } from "@nextui-org/react";
 import { getDocFromDB } from "@/components/utils/firebase-db-utils";
-import MatchDetails from "@/components/match-details";
+import MatchListCard from "@/components/match-list-card";
 
 function Fixtures(props) {
   const { fixtures } = props;
@@ -22,7 +22,8 @@ function Fixtures(props) {
       </Row>
       <ul>
         {fixtures.map((data,index) => (
-          <MatchDetails key={index} matchData={data} userPosts={[]} resultData={[]}/>
+          <MatchListCard key={index} matchData={data}/>
+
         ))}
       </ul>
     </Container>
