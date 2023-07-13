@@ -41,7 +41,7 @@ function TeamPostCard(props) {
           <Card.Body>
             <Row align="center">
               <Grid.Container justify="center">
-                <Grid xs={3}>
+                <Grid xs={4}>
                   <Col>
                     <Text color={user.email === post.email ? "warning" : ""}>
                       {user.email === post.email ? "Your team" : post.name}
@@ -56,7 +56,7 @@ function TeamPostCard(props) {
                     <Text color={post.p3.mvp && "success"}>{post.p3.name}</Text>
                   </Col>
                 </Grid>
-                <Grid xs={2}>
+                <Grid xs={1}>
                   {p1_Points != undefined &&
                     p2_Points != undefined &&
                     p3_Points != undefined && (
@@ -80,7 +80,7 @@ function TeamPostCard(props) {
               p3_Points != undefined && (
                 <Row>
                   <Grid.Container justify="center">
-                    <Grid xs={3}>
+                    <Grid xs={4}>
                       <Col></Col>
                     </Grid>
                     <Grid xs={7}>
@@ -94,7 +94,7 @@ function TeamPostCard(props) {
                         Total:
                       </Col>
                     </Grid>
-                    <Grid xs={2}>
+                    <Grid xs={1}>
                       <Col
                         css={{
                           color: "yellow",
