@@ -40,50 +40,72 @@ function TeamPostCard(props) {
         >
           <Card.Body>
             <Row align="center">
-              <Col>
-                <Text color={user.email === post.email ? "warning" : ""}>
-                  {user.email === post.email ? "Your team" : post.name}
-                </Text>
-                <Text>{post.updatedTime}</Text>
-              </Col>
-              <Col>
-                <Text color={post.p1.mvp && "success"}>{post.p1.name}</Text>
-                <Text color={post.p2.mvp && "success"}>{post.p2.name}</Text>
-                <Text color={post.p3.mvp && "success"}>{post.p3.name}</Text>
-              </Col>
-              {p1_Points != undefined &&
-                p2_Points != undefined &&
-                p3_Points != undefined && (
+              <Grid.Container justify="center">
+                <Grid xs={3}>
                   <Col>
-                    <Text color={post.p1.mvp && "success"}>{p1_Points}</Text>
-                    <Text color={post.p2.mvp && "success"}>{p2_Points}</Text>
-                    <Text color={post.p3.mvp && "success"}>{p3_Points}</Text>
+                    <Text color={user.email === post.email ? "warning" : ""}>
+                      {user.email === post.email ? "Your team" : post.name}
+                    </Text>
+                    <Text>{post.updatedTime}</Text>
                   </Col>
-                )}
+                </Grid>
+                <Grid xs={7}>
+                  <Col>
+                    <Text color={post.p1.mvp && "success"}>{post.p1.name}</Text>
+                    <Text color={post.p2.mvp && "success"}>{post.p2.name}</Text>
+                    <Text color={post.p3.mvp && "success"}>{post.p3.name}</Text>
+                  </Col>
+                </Grid>
+                <Grid xs={2}>
+                  {p1_Points != undefined &&
+                    p2_Points != undefined &&
+                    p3_Points != undefined && (
+                      <Col>
+                        <Text color={post.p1.mvp && "success"}>
+                          {p1_Points}
+                        </Text>
+                        <Text color={post.p2.mvp && "success"}>
+                          {p2_Points}
+                        </Text>
+                        <Text color={post.p3.mvp && "success"}>
+                          {p3_Points}
+                        </Text>
+                      </Col>
+                    )}
+                </Grid>
+              </Grid.Container>
             </Row>
             {p1_Points != undefined &&
               p2_Points != undefined &&
               p3_Points != undefined && (
                 <Row>
-                  <Col></Col>
-                  <Col
-                    css={{
-                      color: "yellow",
-                      fontWeight: "bold",
-                      background: "$blue200",
-                    }}
-                  >
-                    Total:
-                  </Col>
-                  <Col
-                    css={{
-                      color: "yellow",
-                      fontWeight: "bold",
-                      background: "$blue200",
-                    }}
-                  >
-                    {p1_Points + p2_Points + p3_Points}
-                  </Col>
+                  <Grid.Container justify="center">
+                    <Grid xs={3}>
+                      <Col></Col>
+                    </Grid>
+                    <Grid xs={7}>
+                      <Col
+                        css={{
+                          color: "yellow",
+                          fontWeight: "bold",
+                          background: "$blue200",
+                        }}
+                      >
+                        Total:
+                      </Col>
+                    </Grid>
+                    <Grid xs={2}>
+                      <Col
+                        css={{
+                          color: "yellow",
+                          fontWeight: "bold",
+                          background: "$blue200",
+                        }}
+                      >
+                        {p1_Points + p2_Points + p3_Points}
+                      </Col>
+                    </Grid>
+                  </Grid.Container>
                 </Row>
               )}
           </Card.Body>
