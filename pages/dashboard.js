@@ -1,6 +1,7 @@
 import ProtectedRoute from "@/layout/components/protected-route";
 import { useAuth } from "@/context/auth-context";
-import { Container, Spacer, Text } from "@nextui-org/react";
+import { Container, Spacer, Text, Button } from "@nextui-org/react";
+import ResultDisplay from "@/components/results/result-display";
 
 const DashboardPage = () => {
   const { user } = useAuth();
@@ -27,6 +28,7 @@ const DashboardPage = () => {
         >
           "{user.displayName}"
         </Text>
+        <ResultDisplay user={user}/>
       </Container>
     </ProtectedRoute>
   );

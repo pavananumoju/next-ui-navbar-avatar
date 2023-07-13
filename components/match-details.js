@@ -1,32 +1,23 @@
-import { Spacer, Col, Card, Grid, Text, Button, Row } from "@nextui-org/react";
-// import { useRouter } from "next/router";
+import { Spacer, Card, Text } from "@nextui-org/react";
 import { useAuth } from "@/context/auth-context";
-import { getDate_dd_month_yyyy, getDate_wwwddmmyyyy } from "./utils/date-utils";
+import {  getDate_wwwddmmyyyy } from "./utils/date-utils";
 import { currentMatchDay } from "./utils/mock-utils";
 import MatchCardRow from "./match-card-row";
 import TeamPostCard from "./team-post-card";
 
 function MatchDetails(props) {
-  // const router = useRouter();
   const { user } = useAuth();
-  // let bdColor = "gray";
-  const { matchData } = props;
+  const { matchData, resultData } = props;
   const { match1_posts, match2_posts } = props.userPosts;
 
   const mdm = matchData.matchDetailsMap;
-  // console.log(mdm);
-  const data =
+
+  const matchesData =
     mdm != undefined
       ? {
           date: mdm.key,
-          match1_team1_Id: mdm.match[0].matchInfo.team1.teamId,
-          match1_team2_Id: mdm.match[0].matchInfo.team2.teamId,
-          match1_team1: mdm.match[0].matchInfo.team1.teamSName,
-          match1_team2: mdm.match[0].matchInfo.team2.teamSName,
-          match2_team1_Id: mdm.match[1] && mdm.match[1].matchInfo.team1.teamId,
-          match2_team2_Id: mdm.match[1] && mdm.match[1].matchInfo.team2.teamId,
-          match2_team1: mdm.match[1] && mdm.match[1].matchInfo.team1.teamSName,
-          match2_team2: mdm.match[1] && mdm.match[1].matchInfo.team2.teamSName,
+          match_1_data: mdm.match[0],
+          match_2_data: mdm.match[1] && mdm.match[1],
         }
       : null;
 
@@ -37,58 +28,60 @@ function MatchDetails(props) {
 
   return (
     <>
-      {data && (
+      {matchesData && (
         <>
           <Card
             isPressable
             isHoverable
-            // css={{ borderColor: data.date === today ? "yellow" : "" }}
+            // css={{ borderColor: matchesData.date === today ? "yellow" : "" }}
             // variant="bordered"
           >
             <Spacer y={0.5} />
             <Text size={15} b color="#ff4ecd">
-              {data.date}
+              {matchesData.date}
             </Text>
             <Spacer y={0.5} />
             <MatchCardRow
               match={"m1"}
-              data={data}
-              t1id={data.match1_team1_Id}
-              t2id={data.match1_team2_Id}
-              t1sid={data.match1_team1}
-              t2sid={data.match1_team2}
+              matchesData={matchesData}
               today={today}
+              user={user}
+              match_posts={match1_posts}
+              match_data={matchesData.match_1_data}
             />
             <Spacer y={0.5} />
-            {data.match2_team1 && (
+            {matchesData.match_2_data && (
               <>
                 <MatchCardRow
                   match={"m2"}
-                  data={data}
-                  t1id={data.match2_team1_Id}
-                  t2id={data.match2_team2_Id}
-                  t1sid={data.match2_team1}
-                  t2sid={data.match2_team2}
+                  matchesData={matchesData}
                   today={today}
+                  user={user}
+                  match_posts={match2_posts}
+                  match_data={matchesData.match_2_data}
                 />
                 <Spacer y={0.5} />
               </>
             )}
           </Card>
           <Spacer y={1} />
-          {match1_posts && (
-            <TeamPostCard posts={match1_posts} user={user} match={"Match 1"} />
-          )}
+          {match1_posts && <Text color="warning">Match 1</Text>}
+          {match1_posts &&
+            match1_posts.map((post) => (
+              <TeamPostCard post={post} key={post.email} user={user} resultData={resultData[0]}/>
+            ))}
 
           <Spacer y={1} />
-
-          {match2_posts && (
-            <TeamPostCard posts={match2_posts} user={user} match={"Match 2"} />
-          )}
+          {match2_posts && <Text color="warning">Match 2</Text>}
+          {match2_posts &&
+            match2_posts.map((post) => (
+              <TeamPostCard post={post} key={post.email} user={user} resultData={resultData[1]}/>
+            ))}
         </>
       )}
     </>
   );
 }
+
 
 export default MatchDetails;

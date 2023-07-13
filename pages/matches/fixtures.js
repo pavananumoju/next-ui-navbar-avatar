@@ -22,7 +22,7 @@ function Fixtures(props) {
       </Row>
       <ul>
         {fixtures.map((data,index) => (
-          <MatchDetails key={index} matchData={data} userPosts={[]}/>
+          <MatchDetails key={index} matchData={data} userPosts={[]} resultData={[]}/>
         ))}
       </ul>
     </Container>

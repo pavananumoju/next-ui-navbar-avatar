@@ -31,19 +31,10 @@ export const getDataFromAPI = (squadId) => {
 };
 
 export async function getDocFromDB(path, pathSegment) {
-  // console.log('getDocFromDB:'+path, pathSegment)
   const ref = getDocRef(path, pathSegment);
   const docSnap = await getDoc(ref);
-  // docSnap != undefined && docSnap.data() != undefined && console.log('docsnap:'+docSnap.data());
-  // return docSnap.data().player;
-  // return docSnap != undefined && docSnap.data() != undefined && docSnap;
   return await docSnap;
 }
-
-// export async function getDocFromDB(path, pathSegment) {
-//   // const ref = getDocRef(path, pathSegment);
-//   return await getDoc(ref);
-// }
 
 export async function setDocToDB(docRef, data) {
   return await setDoc(docRef, data);
