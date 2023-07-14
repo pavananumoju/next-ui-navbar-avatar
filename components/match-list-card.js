@@ -1,12 +1,21 @@
 import { Spacer, Card, Text } from "@nextui-org/react";
-import { getDate_wwwddmmyyyy } from "./utils/date-utils";
+import { getDate_dd_month_yyyy, getDate_wwwddmmyyyy } from "./utils/date-utils";
 import { currentMatchDay } from "./utils/mock-utils";
 import MatchListCardRow from "./match-list-card-row";
+import { useRouter } from "next/router";
 
 function MatchListCard(props) {
   const { matchData } = props;
+  const router = useRouter();
 
   const mdm = matchData.matchDetailsMap;
+
+  function handleMatchClick() {
+    const rawDate_wwwddmmyyyy = matchData.matchDetailsMap.key;
+    const dateObj = new Date(rawDate_wwwddmmyyyy);
+    const date_dd_month_yyyy = getDate_dd_month_yyyy(dateObj);
+    router.push("/matches/todays/" + date_dd_month_yyyy);
+  }
 
   const matchesData =
     mdm != undefined
@@ -27,6 +36,7 @@ function MatchListCard(props) {
       {matchesData && (
         <>
           <Card
+            onClick={handleMatchClick}
             isPressable
             isHoverable
             // css={{ borderColor: matchesData.date === today ? "yellow" : "" }}
