@@ -1,12 +1,17 @@
-import { Col, Text, Button, Row } from "@nextui-org/react";
+import { Col, Text, Button, Row, Loading } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { getDate_dd_month_yyyy } from "./utils/date-utils";
 import { team_result_SRH_RR } from "@/mock-data/team_result_SRH_RR";
 import { team_result_RCB_MI } from "@/mock-data/team_result_RCB_MI";
-import {  getDocRef, setDocToDB } from "./utils/firebase-db-utils";
+import {
+  getDocsFromDBUsingWhere,
+  updateDocToDB,
+} from "./utils/firebase-db-utils";
+import { useState } from "react";
 
 function MatchCardRow(props) {
   const { matchesData, today, match, user, match_posts, match_data } = props;
+  const [calculateStatus, setCalculateStatus] = useState(false);
 
   // console.log(match_data);
 
@@ -30,8 +35,8 @@ function MatchCardRow(props) {
     //make API call to fetch match 1 / match 2 results. Obj_2
     //use Obj_1 to iterate through Obj_2 data and calculate scores/points
     getResultsFromAPI(matchId).then((matchResultsData) => {
-      var playersList = [];
       for (var player of playerSet) {
+        var playerId = "";
         var playerName = "";
         var playerScore = 0;
         var runsScored = 0;
@@ -50,7 +55,9 @@ function MatchCardRow(props) {
                 prop
               ].batId.toString()
             ) {
-              // const batsmanId = matchResultsData.scoreCard[i].batTeamDetails.batsmenData[prop].batId
+              playerId =
+                matchResultsData.scoreCard[i].batTeamDetails.batsmenData[prop]
+                  .batId;
               playerName =
                 matchResultsData.scoreCard[i].batTeamDetails.batsmenData[prop]
                   .batName;
@@ -74,8 +81,6 @@ function MatchCardRow(props) {
                 prop
               ].bowlerId.toString()
             ) {
-              // const bowlerId = matchResultsData.scoreCard[i].bowlTeamDetails.bowlersData[prop].bowlerId
-              // const bowlerName = matchResultsData.scoreCard[i].bowlTeamDetails.bowlersData[prop].bowlName
               wicketsTaken =
                 matchResultsData.scoreCard[i].bowlTeamDetails.bowlersData[prop]
                   .wickets;
@@ -119,28 +124,15 @@ function MatchCardRow(props) {
         //     ", MOM: " +
         //     isMOM
         // );
-        var playerData = { id: player, name: playerName, points: playerScore };
-        playersList.push(playerData);
+        
+        //save the score and points details in a table to be able to view later by users
+        savePlayerResultsToDB(date_dd_month_yyyy, match, playerId, playerScore).then(res => {
+          setCalculateStatus(true);
+        });
+        // /Posts/01_April_2023/m1/pavan@cb.com
       }
       //All Players loop ends here
-      console.log(playersList);
-      //save the matchResultsData to DB here.
-      // console.log(date_dd_month_yyyy);
-      const currentMatchResultData = {
-        date: date_dd_month_yyyy,
-        matchId: matchId,
-        results: playersList,
-      };
-      const docRef = getDocRef("MatchPoints", date_dd_month_yyyy + match);
-      setDocToDB(docRef, currentMatchResultData).then((res) =>
-        console.log(
-          "Results data successfully saved in DB for match: " + matchId,
-          date_dd_month_yyyy
-        )
-      );
     });
-
-    //save the score and points details in a table to be able to view later by users
   }
 
   return (
@@ -167,12 +159,15 @@ function MatchCardRow(props) {
       </Col>
       {user.isAdmin && (
         <Col>
-          <Button
-            size={"xs"}
-            onPress={() => handleCalulatePoints(match_data.matchInfo.matchId)}
-          >
-            Calculate
-          </Button>
+          {!calculateStatus && (
+            <Button
+              size={"xs"}
+              onPress={() => handleCalulatePoints(match_data.matchInfo.matchId)}
+            >
+              Calculate
+            </Button>
+          )}
+          {calculateStatus && <Text color="success">Calculated</Text>}
         </Col>
       )}
     </Row>
@@ -200,6 +195,29 @@ async function getResultsFromAPI(matchId) {
     : team_result_RCB_MI;
 
   // return team_result_LSG_SRH;
+}
+
+async function savePlayerResultsToDB(
+  date_dd_month_yyyy,
+  match,
+  playerId,
+  playerScore
+) {
+
+  ["p1", "p2", "p3"].map(async (player) => {
+    const querySnapshot = await getDocsFromDBUsingWhere(
+      `/Posts/${date_dd_month_yyyy}/${match}`,
+      `${player}.id`,
+      playerId.toString()
+    );
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      // console.log(doc.id, " >> ", doc.data());
+      updateDocToDB(`/Posts/${date_dd_month_yyyy}/${match}`, doc.data().email, {
+        [`${player}.points`]: playerScore,
+      });
+    });
+  });
 }
 
 export default MatchCardRow;
