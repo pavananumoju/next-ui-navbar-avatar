@@ -7,7 +7,7 @@ import TeamPostCard from "./team-post-card";
 
 function MatchDetails(props) {
   const { user } = useAuth();
-  const { matchData, resultData } = props;
+  const { matchData } = props;
   const { match1_posts, match2_posts } = props.userPosts;
 
   const mdm = matchData.matchDetailsMap;
@@ -68,14 +68,14 @@ function MatchDetails(props) {
           {match1_posts && <Text color="warning">Match 1</Text>}
           {match1_posts &&
             match1_posts.map((post) => (
-              <TeamPostCard post={post} key={post.email} user={user} resultData={resultData[0]}/>
+              <TeamPostCard post={post} key={post.email} user={user}/>
             ))}
 
           <Spacer y={1} />
           {match2_posts && <Text color="warning">Match 2</Text>}
           {match2_posts &&
             match2_posts.map((post) => (
-              <TeamPostCard post={post} key={post.email} user={user} resultData={resultData[1]}/>
+              <TeamPostCard post={post} key={post.email} user={user}/>
             ))}
         </>
       )}

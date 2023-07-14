@@ -6,6 +6,7 @@ import {
   setDoc,
   collection,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 
@@ -50,4 +51,14 @@ export async function getDocsFromDB(path) {
 
 export function getDocRef(path, pathSegment) {
   return doc(db, path, pathSegment);
+}
+
+export async function getDocsFromDBUsingWhere(pathSegment, param_1, param_2){
+  const q = query(collection(db, pathSegment), where(param_1, "==", param_2));
+  return await getDocs(q);
+}
+
+export async function updateDocToDB(path, pathSegment, data){
+  const docRef = getDocRef(path, pathSegment);
+  await updateDoc(docRef, data);
 }

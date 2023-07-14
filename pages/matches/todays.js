@@ -9,19 +9,11 @@ import {
   getDate_wwwddmmyyyy,
 } from "@/components/utils/date-utils";
 import { todaysMatchDate } from "@/components/utils/mock-utils";
-import { useEffect, useState } from "react";
 
 function Todays(props) {
   const { fixtures, posts } = props;
-  const [ resultData, setResultData ] = useState([]);
 
   const date = todaysMatchDate;
-  const date_dd_month_yyyy = getDate_dd_month_yyyy(date);
-
-  useEffect(() => {
-    fetchDataOnPageLoad(date_dd_month_yyyy).then(([m1_res, m2_res]) => setResultData([m1_res, m2_res]));
-  }, []);
-  
 
   // console.log(fixtures);
   return (
@@ -32,7 +24,6 @@ function Todays(props) {
       <MatchDetails
         matchData={fixtures[0]}
         userPosts={posts}
-        resultData={resultData}
       />
     </Container>
   );
@@ -72,13 +63,6 @@ export async function getServerSideProps() {
   return {
     props: { fixtures: matchDetails, posts: { match1_posts, match2_posts } },
   };
-}
-
-async function fetchDataOnPageLoad(date_dd_month_yyyy) {
-  const docSnap_m1 = await getDocFromDB("MatchPoints", date_dd_month_yyyy+'m1');
-  const docSnap_m2 = await getDocFromDB("MatchPoints", date_dd_month_yyyy+'m2');
-  // console.log(docSnap_m1.data());
-  return [docSnap_m1.data(), docSnap_m2.data()];
 }
 
 export default Todays;
