@@ -29,8 +29,11 @@ function Todays(props) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({context}) {
+
+  console.log(context);
   //mock date
+
   const date = todaysMatchDate;
 
   const date_wwwddmmyyyy = getDate_wwwddmmyyyy(date);
