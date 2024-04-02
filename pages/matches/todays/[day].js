@@ -42,7 +42,7 @@ const date = new Date(arr.toString());
 
   const date_wwwddmmyyyy = getDate_wwwddmmyyyy(date);
 
-  const docSnap = await getDocFromDB("Fixtures", "2023");
+  const docSnap = await getDocFromDB("Fixtures", "2024");
   const allMatchesDetails = docSnap.data().matchDetails;
   const matchDetails = allMatchesDetails.filter((matchData) => {
     {

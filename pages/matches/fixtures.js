@@ -7,7 +7,7 @@ function Fixtures(props) {
   return (
     <Container justify="center" align="center">
       <Spacer y={2} />
-      <Text>Fixtures 2023</Text>
+      <Text>Fixtures 2024</Text>
       <Spacer y={0.5} />
       <Row gap={0.5}>
         <Col>
@@ -31,7 +31,7 @@ function Fixtures(props) {
 }
 
 export async function getStaticProps() {
-  const docSnap = await getDocFromDB("Fixtures", "2023");
+  const docSnap = await getDocFromDB("Fixtures", "2024");
   return { props: { fixtures: docSnap.data().matchDetails } };
 }
 

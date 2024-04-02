@@ -11,7 +11,11 @@ import {
 } from "firebase/firestore";
 
 export const getDataFromAPI = (squadId) => {
+  // commented on 28/03/2024
   const URL = `https://cricbuzz-cricket.p.rapidapi.com/series/v1/5945/squads/${squadId}`;
+
+  // added on 28/03/2024
+  // const URL = `https://cricbuzz-cricket.p.rapidapi.com/series/v1/7607/squads/43978`;
 
   // const URL = `https://cricbuzz-cricket.p.rapidapi.com/series/v1/5945`;
 
@@ -26,6 +30,7 @@ export const getDataFromAPI = (squadId) => {
     .then((res) => res.json())
     .then((data) => {
       const docRef = getDocRef("Squads", `${squadId}`);
+      console.log("sqid: ",`${squadId}`);
       // const docRef = getDocRef("Fixtures", '2023');
       setDocToDB(docRef, data);
     });

@@ -9,7 +9,6 @@ function MatchDetails(props) {
   const { user } = useAuth();
   const { matchData } = props;
   const { match1_posts, match2_posts } = props.userPosts;
-
   const mdm = matchData.matchDetailsMap;
 
   const matchesData =
