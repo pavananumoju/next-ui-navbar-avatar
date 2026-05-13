@@ -1,6 +1,12 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## CricBuds v2 (greenfield)
+
+A modern App Router application lives in **`apps/cricbuds`**. See [apps/cricbuds/README.md](apps/cricbuds/README.md) for stack, module layout, and how to run it. Deploy it from that directory on Vercel (set **Root Directory** to `apps/cricbuds`).
+
+The legacy Pages Router app at the repository root remains unchanged for reference.
+
+## Getting Started (legacy root app)
 
 First, run the development server:
 
