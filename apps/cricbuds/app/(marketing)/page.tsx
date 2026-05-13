@@ -48,7 +48,10 @@ export default function HomePage() {
               Open app
               <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
-            <Link href="/rules" className={buttonVariants({ variant: "secondary" })}>
+            <Link href="/login" className={buttonVariants({ variant: "secondary" })}>
+              Sign in with Google
+            </Link>
+            <Link href="/rules" className={buttonVariants({ variant: "outline" })}>
               Fantasy rules
             </Link>
           </div>
@@ -74,7 +77,7 @@ export default function HomePage() {
                 <strong className="text-zinc-900 dark:text-zinc-100">
                   features/matches
                 </strong>{" "}
-                — schedules and lock deadlines (stub).
+                — RapidAPI sync to Firestore; live reads in the app.
               </p>
               <p>
                 <strong className="text-zinc-900 dark:text-zinc-100">

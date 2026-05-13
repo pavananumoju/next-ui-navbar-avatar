@@ -12,8 +12,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "i.cricketcb.com",
-        pathname: "/stats/img/**",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "/**",
       },
     ],
   },
